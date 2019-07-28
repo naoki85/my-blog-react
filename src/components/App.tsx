@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+// import { tsPropertySignature } from '@babel/types';
 // import { makeStyles, createStyles } from '@material-ui/core/styles';
 // import Button from '@material-ui/core/Button';
 // import Card from '@material-ui/core/Card';
@@ -7,7 +8,18 @@ import React, { FC } from 'react';
 // import Icon from '@material-ui/core/Icon';
 // import Typography from '@material-ui/core/Typography';
 
-const AppComponent: FC<{}> = () => {
+export interface Formula {
+  id: number;
+  operator: "+" | "-";
+  num: number;
+  result: number;
+}
+
+interface AppProps {
+  formulas: Formula[];
+}
+
+const AppComponent: FC<AppProps> = (props: AppProps) => {
   return (
     <table>
       <thead>
@@ -19,24 +31,28 @@ const AppComponent: FC<{}> = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>
-            <form>
-              <label htmlFor={"plus"}>
-                +
-              </label>
-            </form>
-          </td>
-          <td>
-            <form>
-              <label htmlFor={"plus"}>
-                +
-              </label>
-            </form>
-          </td>
-          <td>result</td>
-        </tr>
+        {props.formulas.map(formula => {
+          return (
+            <tr>
+              <td>{formula.id}</td>
+              <td>
+                <form>
+                  <label htmlFor={"plus"}>
+                    {formula.operator}
+                  </label>
+                </form>
+              </td>
+              <td>
+                <form>
+                  <label htmlFor={"plus"}>
+                    {formula.num}
+                  </label>
+                </form>
+              </td>
+              <td>{formula.result}</td>
+            </tr>
+          )
+        })}
       </tbody>
     </table>
   );

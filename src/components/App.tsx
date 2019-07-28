@@ -1,60 +1,53 @@
 import React, { FC } from 'react';
+import CalcRow, { Formula } from './CalcRow'
 // import { tsPropertySignature } from '@babel/types';
 // import { makeStyles, createStyles } from '@material-ui/core/styles';
-// import Button from '@material-ui/core/Button';
-// import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
-// import Icon from '@material-ui/core/Icon';
-// import Typography from '@material-ui/core/Typography';
-
-export interface Formula {
-  id: number;
-  operator: "+" | "-";
-  num: number;
-  result: number;
-}
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 interface AppProps {
   formulas: Formula[];
 }
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 650,
+  },
+}));
+
 const AppComponent: FC<AppProps> = (props: AppProps) => {
+  const classes = useStyles();
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>演算子</th>
-          <th>数字</th>
-          <th>結果</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.formulas.map(formula => {
-          return (
-            <tr>
-              <td>{formula.id}</td>
-              <td>
-                <form>
-                  <label htmlFor={"plus"}>
-                    {formula.operator}
-                  </label>
-                </form>
-              </td>
-              <td>
-                <form>
-                  <label htmlFor={"plus"}>
-                    {formula.num}
-                  </label>
-                </form>
-              </td>
-              <td>{formula.result}</td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+    <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>#</TableCell>
+            <TableCell>演算子</TableCell>
+            <TableCell>数字</TableCell>
+            <TableCell>結果</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props.formulas.map(formula => {
+            return (
+              <CalcRow formula={formula} />
+            )
+          })}
+        </TableBody>
+      </Table>
+    </Paper>
   );
 };
 

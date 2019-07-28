@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import AppComponent, { Formula } from '../components/App';
+import AppComponent from '../components/App';
+import { Formula } from '../components/CalcRow';
 
 const formulas: Formula[] = [
   {

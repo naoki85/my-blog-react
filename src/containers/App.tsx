@@ -1,25 +1,27 @@
-import React, { FC } from 'react';
-import AppComponent from '../components/App';
-import { Formula } from '../components/CalcRow';
+import { connect } from "react-redux";
+import { Dispatch, Action } from "redux";
+import { Result } from "../reducers";
+import * as Act from '../actions';
+import AppComponent, { AppProcProps, AppStateProps } from '../components/App';
 
-const formulas: Formula[] = [
-  {
-    id: 1,
-    operator: "+",
-    num: 111,
-    result: 111
-  },
-  {
-    id: 2,
-    operator: "-",
-    num: 222,
-    result: 333
+export const mapStateToProps = function(state: Result): AppStateProps {
+  return {
+    formulas: [...state.formulas, state.formula]
   }
-];
-
-
-const AppContainer: FC = () => {
-  return <AppComponent formulas={formulas} />;
 };
 
-export default AppContainer;
+export const mapDispatchToProps = function(
+  dispatch: Dispatch<Action<{}>>
+): AppProcProps {
+  return {
+    changeOperator: (operator: Act.Operator) =>
+      dispatch(Act.changeOperator(operator)),
+    changeNum: (num: number) => dispatch(Act.changeNum(num)),
+    appendRow: () => dispatch(Act.appendRow())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppComponent);

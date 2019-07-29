@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
-import CalcRow, { Formula } from './CalcRow'
-// import { tsPropertySignature } from '@babel/types';
-// import { makeStyles, createStyles } from '@material-ui/core/styles';
+import CalcRow, { CalcRowProcProps, Formula } from './CalcRow'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,9 +8,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-interface AppProps {
+export interface AppProcProps extends CalcRowProcProps {}
+export interface AppStateProps {
   formulas: Formula[];
 }
+
+interface AppProps extends AppProcProps, AppStateProps {}
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,7 +43,13 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
         <TableBody>
           {props.formulas.map(formula => {
             return (
-              <CalcRow formula={formula} />
+              <CalcRow
+                key={formula.id}
+                changeNum={props.changeNum}
+                changeOperator={props.changeOperator}
+                appendRow={props.appendRow}
+                formula={formula}
+              />
             )
           })}
         </TableBody>

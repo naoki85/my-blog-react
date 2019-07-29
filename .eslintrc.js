@@ -25,6 +25,7 @@ module.exports = {
       'indent': 'off',
       '@typescript-eslint/indent': ['error', 2],
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+      '@typescript-eslint/no-empty-interface': 'off',
       'eol-last': ['error', 'always'],
       'func-style': ['error', 'expression', { allowArrowFunctions: true }],
       'newline-before-return': 'error',

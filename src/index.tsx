@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import App from './containers/App';
-import reducer from "./reducers";
+import postReducer from "./reducers";
 import { compose, createStore, StoreEnhancerStoreCreator } from "redux";
 import * as serviceWorker from './serviceWorker';
 
@@ -12,7 +12,7 @@ export interface CustomWindow extends Window {
 declare let window: CustomWindow;
 const composeEnhancers = (window.__REDUX_DEVTOOLS_EXTENSION__() as typeof compose) || compose;
 
-const store = createStore(reducer, composeEnhancers);
+const store = createStore(postReducer, composeEnhancers);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,33 +1,15 @@
-export const CHANGE_OPERATOR = "CHANGE_OPERATOR";
-export const CHANGE_NUM = "CHANGE_NUM";
-export const APPEND_ROW = "APPEND_ROW";
-export type Operator = "+" | "-";
+import { Post } from '../types/state';
 
-export const changeOperator = (operator: Operator) => {
-  return {
-    type: CHANGE_OPERATOR as typeof CHANGE_OPERATOR,
-    payload: {
-      operator
-    }
-  };
-};
+export enum TypeKeys {
+  FETCH_POSTS = 'FETCH_POSTS',
+}
 
-export const changeNum = (num: number) => {
-  return {
-    type: CHANGE_NUM as typeof CHANGE_NUM,
-    payload: {
-      num
-    }
-  };
-};
+export interface PostsAction {
+  type: TypeKeys;
+  posts: Post[];
+}
 
-export const appendRow = () => {
-  return {
-    type: APPEND_ROW as typeof APPEND_ROW
-  };
-};
-
-export type Actions =
-  | ReturnType<typeof changeOperator>
-  | ReturnType<typeof changeNum>
-  | ReturnType<typeof appendRow>
+export const fetchPosts = (): PostsAction => ({
+  posts: [],
+  type: TypeKeys.FETCH_POSTS
+});

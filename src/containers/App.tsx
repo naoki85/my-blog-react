@@ -1,25 +1,23 @@
 import { connect } from "react-redux";
-import { Dispatch, Action } from "redux";
-import { Result } from "../reducers";
-import * as Act from '../actions';
-import AppComponent, { AppProcProps, AppStateProps } from '../components/App';
+import { Dispatch } from "redux";
+import { StoreState } from "../types/state";
+import { fetchPosts } from '../actions';
+import { PostsState } from '../reducers';
+import AppComponent, { AppStateProps } from '../components/App';
 
-export const mapStateToProps = function(state: Result): AppStateProps {
+export const mapStateToProps = function(state: StoreState): AppStateProps {
   return {
-    formulas: [...state.formulas, state.formula]
+    posts: state.posts || []
   }
 };
 
-export const mapDispatchToProps = function(
-  dispatch: Dispatch<Action<{}>>
-): AppProcProps {
-  return {
-    changeOperator: (operator: Act.Operator) =>
-      dispatch(Act.changeOperator(operator)),
-    changeNum: (num: number) => dispatch(Act.changeNum(num)),
-    appendRow: () => dispatch(Act.appendRow())
-  };
-};
+interface DispatchProps {
+  fetchPosts: () => PostsState;
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+  fetchPosts: () => dispatch(fetchPosts()),
+});
 
 export default connect(
   mapStateToProps,

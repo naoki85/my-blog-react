@@ -1,18 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
+import thunk from 'redux-thunk';
 import App from './containers/App';
 import postReducer from "./reducers";
-import { compose, createStore, StoreEnhancerStoreCreator } from "redux";
+import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
 import * as serviceWorker from './serviceWorker';
 
 export interface CustomWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION__: () => StoreEnhancerStoreCreator<{}, {}>;
 }
 declare let window: CustomWindow;
-const composeEnhancers = (window.__REDUX_DEVTOOLS_EXTENSION__() as typeof compose) || compose;
 
-const store = createStore(postReducer, composeEnhancers);
+const rootReducer = () => combineReducers({ postReducer });
+
+const store = createStore(rootReducer, compose(
+  applyMiddleware(thunk),
+  window.__REDUX_DEVTOOLS_EXTENSION__
+    ? window.__REDUX_DEVTOOLS_EXTENSION__()
+    : (f: StoreEnhancerStoreCreator<{}, {}>) => f
+));
 
 ReactDOM.render(
   <Provider store={store}>

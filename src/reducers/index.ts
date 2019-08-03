@@ -1,25 +1,15 @@
-import { Reducer } from 'redux';
-import { TypeKeys, PostsAction } from '../actions';
+import { TypeKeys, Actions } from '../actions';
 import { Post } from '../types/state';
 
-export interface PostsState {
-  posts: Post[];
-}
+export const initialState: Post[] = [];
 
-export const initialState: PostsState = { posts: [] };
-
-const postReducer: Reducer<PostsState, PostsAction> = (
-  state: PostsState = initialState,
-  action: PostsAction,
-) => {
+export default (state = initialState, action: Actions) => {
   switch (action.type) {
-    case TypeKeys.FETCH_POSTS: {
-      return state;
+    case TypeKeys.FETCH_POSTS_SUCCESS: {
+      return action.payload.data;
     }
     default: {
       return state;
     }
   }
 };
-
-export default postReducer;

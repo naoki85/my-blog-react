@@ -1,13 +1,8 @@
 import React, { FC } from 'react';
-import CalcRow from './CalcRow'
+import PostRow from './PostRow'
 import { Post } from '../types/state'
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 export interface AppStateProps {
   posts: Post[];
@@ -15,43 +10,28 @@ export interface AppStateProps {
 
 interface AppProps extends AppStateProps {}
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3),
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 650,
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    cardGrid: {
+      marginTop: theme.spacing(3),
+    },
+  })
+);
 
 const AppComponent: FC<AppProps> = (props: AppProps) => {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>#</TableCell>
-            <TableCell>演算子</TableCell>
-            <TableCell>数字</TableCell>
-            <TableCell>結果</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.posts.map(post => {
-            return (
-              <CalcRow
-                key={post.Id}
-                post={post}
-              />
-            )
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
+    <Grid container spacing={4} className={classes.cardGrid}>
+      {props.posts.map(post => {
+        return (
+          <PostRow
+            key={post.Id}
+            post={post}
+          />
+        )
+      })}
+    </Grid>
   );
 };
 

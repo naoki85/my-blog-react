@@ -6,6 +6,8 @@ import App from './containers/App';
 import posts from "./reducers";
 import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
 import * as serviceWorker from './serviceWorker';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 
 export interface CustomWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION__: () => StoreEnhancerStoreCreator<{}, {}>;
@@ -23,7 +25,10 @@ const store = createStore(rootReducer(), compose(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <CssBaseline />
+    <Container maxWidth="lg">
+      <App />
+    </Container>
   </Provider>,
   document.getElementById('root')
 );

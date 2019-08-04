@@ -5,8 +5,8 @@ import TableCell from '@material-ui/core/TableCell';
 export type Operator = "+" | "-";
 
 export interface Post {
-  id: number;
-  title: string;
+  Id: number;
+  Title: string;
 }
 
 interface CalcRowStateProps {
@@ -17,10 +17,10 @@ interface CalcRowProps extends CalcRowStateProps {}
 const CalcRow: FC<CalcRowProps> = (props: CalcRowProps) => {
   return (
     <TableRow>
-      <TableCell>{props.post.id}</TableCell>
+      <TableCell>{props.post.Id}</TableCell>
       <TableCell>hoge</TableCell>
       <TableCell>fuga</TableCell>
-      <TableCell>{props.post.title}</TableCell>
+      <TableCell>{props.post.Title}</TableCell>
     </TableRow>
   )
 };

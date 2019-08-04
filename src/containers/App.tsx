@@ -1,27 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Dispatch, AnyAction } from "redux";
+import { Dispatch, Action, AnyAction } from "redux";
 import { StoreState } from "../types/state";
 import { Actions } from '../actions';
 import AppComponent, { AppStateProps } from '../components/App';
 
 export const mapStateToProps = function(state: StoreState): AppStateProps {
   return {
-    posts: state.posts || []
+    posts: state.postReducer || []
   }
 };
 
-// interface DispatchProps {
-//   fetchPosts: () => void;
-// }
-//
-// const mapDispatchToProps = (dispatch: Dispatch<Action<{}>>):
-// DispatchProps & {
-//   dispatch: Dispatch<Action<{}>>;
-// } => {
-//   return {
-//     dispatch,
-//   }};
+const mapDispatchToProps = function(
+  dispatch: Dispatch<Action<{}>>
+): {
+    dispatch: Dispatch<Action<{}>>;
+  } {
+  return {
+    dispatch,
+  };
+};
 
 class Posts extends React.Component<AppStateProps & { dispatch: Dispatch }> {
   componentDidMount() {
@@ -40,5 +38,5 @@ class Posts extends React.Component<AppStateProps & { dispatch: Dispatch }> {
 
 export default connect(
   mapStateToProps,
-  // mapDispatchToProps
+  mapDispatchToProps
 )(Posts);

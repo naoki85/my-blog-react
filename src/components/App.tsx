@@ -44,7 +44,7 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
           {props.posts.map(post => {
             return (
               <CalcRow
-                key={post.id}
+                key={post.Id}
                 post={post}
               />
             )

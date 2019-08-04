@@ -1,9 +1,36 @@
 {
-  "posts": [
-    { "id": 1, "title": "json-server", "author": "typicode" }
-  ],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
-  ],
-  "profile": { "name": "typicode" }
+  "posts": {
+    "Posts": [
+      {
+        "Id": 1,
+        "PostCategoryId": 1,
+        "Title": "test title 1",
+        "ImageUrl": "http://d29xhtkvbwm2ne.cloudfront.net/image_1",
+        "PublishedAt": "2019-01-01",
+        "PostCategory": {
+          "Id": 1, "Name": "Not categorized", "Color": ""
+        }
+      },
+      {
+        "Id": 2,
+        "PostCategoryId": 1,
+        "Title": "test title 2",
+        "ImageUrl": "http://d29xhtkvbwm2ne.cloudfront.net/image_2",
+        "PublishedAt": "2019-01-02",
+        "PostCategory": {
+          "Id": 1, "Name": "Not categorized", "Color": ""
+        }
+      },
+      {
+        "Id": 3,
+        "PostCategoryId": 1,
+        "Title": "test title 3",
+        "ImageUrl": "https://s3-ap-northeast-1.amazonaws.com/bookrecorder-image/  commons/default_user_icon.png",
+        "PublishedAt": "2019-01-03",
+        "PostCategory": {
+          "Id": 1, "Name": "Not categorized", "Color": ""
+        }
+      }
+    ]
+  }
 }

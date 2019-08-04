@@ -1,22 +1,23 @@
 import { Dispatch } from 'react';
 
 export interface Post {
-  id: number;
-  postCategoryId: number;
-  title: string;
-  imageUrl: string;
-  publishedAt: string;
-  postCategory: PostCategory;
+  Id: number;
+  PostCategoryId: number;
+  Title: string;
+  ImageUrl: string;
+  PublishedAt: string;
+  PostCategory: PostCategory;
 }
 
 export interface PostCategory {
-  id: number;
-  name: string;
-  color: string;
+  Id: number;
+  Name: string;
+  Color: string;
 }
 
 export interface StoreState {
   type: string;
   dispatch: Dispatch;
   posts: Post[];
+  postReducer: Post[];
 }

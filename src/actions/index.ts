@@ -32,7 +32,7 @@ const fetchPosts = () => {
     dispatch(fetchPostsStart());
     try {
       const response = await axios.get(`${apiURL}/posts`);
-      dispatch(fetchPostsSuccess(response.data.body));
+      dispatch(fetchPostsSuccess(response.data.body.Posts));
     } catch (e) {
       dispatch(fetchPostsFail(e));
     }

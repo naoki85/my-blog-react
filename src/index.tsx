@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import thunk from 'redux-thunk';
 import App from './containers/App';
-import postReducer from "./reducers";
+import posts from "./reducers";
 import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
 import * as serviceWorker from './serviceWorker';
 
@@ -12,7 +12,7 @@ export interface CustomWindow extends Window {
 }
 declare let window: CustomWindow;
 
-const rootReducer = () => combineReducers({ postReducer });
+const rootReducer = () => combineReducers({ posts });
 
 const store = createStore(rootReducer(), compose(
   applyMiddleware(thunk),

@@ -19,5 +19,4 @@ export interface StoreState {
   type: string;
   dispatch: Dispatch;
   posts: Post[];
-  postReducer: Post[];
 }

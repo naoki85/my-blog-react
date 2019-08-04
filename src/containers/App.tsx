@@ -7,7 +7,7 @@ import AppComponent, { AppStateProps } from '../components/App';
 
 export const mapStateToProps = function(state: StoreState): AppStateProps {
   return {
-    posts: state.postReducer || []
+    posts: state.posts || []
   }
 };
 

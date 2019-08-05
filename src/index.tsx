@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import thunk from 'redux-thunk';
 import App from './containers/App';
 import Footer from './containers/Footer';
+import Navbar from './containers/Navbar';
 import posts from "./reducers";
 import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
 import * as serviceWorker from './serviceWorker';
@@ -30,6 +31,7 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <CssBaseline />
+      <Navbar />
       <Container maxWidth="lg">
         <App />
       </Container>

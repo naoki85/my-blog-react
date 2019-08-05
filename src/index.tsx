@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import thunk from 'redux-thunk';
 import App from './containers/App';
+import Footer from './containers/Footer';
 import posts from "./reducers";
 import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
 import * as serviceWorker from './serviceWorker';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './styles/theme'
 
 export interface CustomWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION__: () => StoreEnhancerStoreCreator<{}, {}>;
@@ -24,12 +27,15 @@ const store = createStore(rootReducer(), compose(
 ));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <CssBaseline />
-    <Container maxWidth="lg">
-      <App />
-    </Container>
-  </Provider>,
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <App />
+      </Container>
+      <Footer />
+    </Provider>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 

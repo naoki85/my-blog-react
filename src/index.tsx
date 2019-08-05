@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { Provider } from "react-redux";
 import thunk from 'redux-thunk';
 import App from './containers/App';
@@ -30,12 +31,15 @@ const store = createStore(rootReducer(), compose(
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
-      <CssBaseline />
-      <Navbar />
-      <Container maxWidth="lg">
-        <App />
-      </Container>
-      <Footer />
+      <BrowserRouter>
+        <CssBaseline />
+        <Navbar />
+        <Container maxWidth="lg">
+          <Route exact path={'/'} component={App} />
+          <Redirect to={'/'} />
+        </Container>
+        <Footer />
+      </BrowserRouter>
     </Provider>
   </ThemeProvider>,
   document.getElementById('root')

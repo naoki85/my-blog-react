@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from "react-redux";
 import thunk from 'redux-thunk';
 import App from './containers/App';
+import PostShow from './containers/posts/Show';
 import Footer from './containers/Footer';
 import Navbar from './containers/Navbar';
 import posts from "./reducers";
@@ -35,8 +36,11 @@ ReactDOM.render(
         <CssBaseline />
         <Navbar />
         <Container maxWidth="lg">
-          <Route exact path={'/'} component={App} />
-          <Redirect to={'/'} />
+          <Switch>
+            <Route path={'/posts/:id'} component={PostShow} />
+            <Route exact={true} path={'/'} component={App} />
+            <Redirect to={'/'} />
+          </Switch>
         </Container>
         <Footer />
       </BrowserRouter>

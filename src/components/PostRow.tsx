@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
     cardMedia: {
       width: 160,
     },
+    cardLink: {
+      textDecoration: 'none',
+    },
   })
 );
 
@@ -39,7 +42,7 @@ const PostRow: FC<PostRowProps> = (props: PostRowProps) => {
 
   return (
     <Grid item key={props.post.Id} xs={12} md={6}>
-      <CardActionArea component="a" href="#">
+      <Link to={`/posts/${props.post.Id}`} className={classes.cardLink}>
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
@@ -49,12 +52,6 @@ const PostRow: FC<PostRowProps> = (props: PostRowProps) => {
               <Typography variant="subtitle1" color="textSecondary">
                 {props.post.PublishedAt}
               </Typography>
-              {/*<Typography variant="subtitle1" paragraph>*/}
-              {/*  {post.description}*/}
-              {/*</Typography>*/}
-              {/*<Typography variant="subtitle1" color="primary">*/}
-              {/*    Continue reading...*/}
-              {/*</Typography>*/}
             </CardContent>
           </div>
           <Hidden xsDown>
@@ -65,7 +62,7 @@ const PostRow: FC<PostRowProps> = (props: PostRowProps) => {
             />
           </Hidden>
         </Card>
-      </CardActionArea>
+      </Link>
     </Grid>
   )
 };

@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from "react-redux";
 import thunk from 'redux-thunk';
+import {routerMiddleware, connectRouter, ConnectedRouter} from 'connected-react-router';
+import { History, createBrowserHistory } from 'history';
 import App from './containers/App';
 import PostShow from './containers/posts/Show';
 import Footer from './containers/Footer';
@@ -20,19 +22,27 @@ export interface CustomWindow extends Window {
 }
 declare let window: CustomWindow;
 
-const rootReducer = () => combineReducers({ posts });
+const history = createBrowserHistory();
 
-const store = createStore(rootReducer(), compose(
-  applyMiddleware(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__
-    ? window.__REDUX_DEVTOOLS_EXTENSION__()
-    : (f: StoreEnhancerStoreCreator<{}, {}>) => f
-));
+const rootReducer = (history: History<{}>) => combineReducers({
+  router: connectRouter(history),
+  posts
+});
+
+const configureStore = (history: History<{}>) => {
+  return createStore(rootReducer(history), compose(
+    applyMiddleware(routerMiddleware(history), thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__
+      ? window.__REDUX_DEVTOOLS_EXTENSION__()
+      : (f: StoreEnhancerStoreCreator<{}, {}>) => f
+  ));
+};
+const store = configureStore(history);
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
-      <BrowserRouter>
+      <ConnectedRouter history={history}>
         <CssBaseline />
         <Navbar />
         <Container maxWidth="lg">
@@ -43,7 +53,7 @@ ReactDOM.render(
           </Switch>
         </Container>
         <Footer />
-      </BrowserRouter>
+      </ConnectedRouter>
     </Provider>
   </ThemeProvider>,
   document.getElementById('root')

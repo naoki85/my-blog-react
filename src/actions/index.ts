@@ -7,6 +7,9 @@ export enum TypeKeys {
   FETCH_POSTS = 'FETCH_POSTS',
   FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS',
   FETCH_POSTS_FAIL = 'FETCH_POSTS_FAIL',
+  FETCH_POST = 'FETCH_POST',
+  FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS',
+  FETCH_POST_FAIL = 'FETCH_POST_FAIL',
 }
 
 declare let process: {
@@ -18,14 +21,21 @@ declare let process: {
 const apiURL = process.env.REACT_APP_API_URL;
 
 const fetchPostsStart = () => createAction(TypeKeys.FETCH_POSTS, {});
+const fetchPostStart = () => createAction(TypeKeys.FETCH_POST, {});
 
 const fetchPostsSuccess = (data: Post[]) =>
   createAction(TypeKeys.FETCH_POSTS_SUCCESS, {
     data,
   });
+const fetchPostSuccess = (data: Post[]) =>
+  createAction(TypeKeys.FETCH_POST_SUCCESS, {
+    data,
+  });
 
 const fetchPostsFail = (error: Error) =>
   createAction(TypeKeys.FETCH_POSTS_FAIL, { message: error.message });
+const fetchPostFail = (error: Error) =>
+  createAction(TypeKeys.FETCH_POST_FAIL, { message: error.message });
 
 const fetchPosts = () => {
   return async (dispatch: Dispatch<AnyAction>) => {
@@ -38,13 +48,28 @@ const fetchPosts = () => {
     }
   };
 };
+const fetchPost = (id: number) => {
+  return async (dispatch: Dispatch<AnyAction>) => {
+    dispatch(fetchPostStart());
+    try {
+      const response = await axios.get(`${apiURL}/posts/${String(id)}`);
+      const post: Post = response.data.body;
+      dispatch(fetchPostSuccess([post]));
+    } catch (e) {
+      dispatch(fetchPostFail(e));
+    }
+  };
+};
 
 export const DispatchActions = {
   fetchPostsSuccess,
   fetchPostsFail,
+  fetchPostSuccess,
+  fetchPostFail,
 };
 export const Actions = {
   ...DispatchActions,
   fetchPosts,
+  fetchPost,
 };
 export type Actions = ActionsUnion<typeof DispatchActions>;

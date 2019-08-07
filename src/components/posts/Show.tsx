@@ -1,13 +1,22 @@
 import React, { FC } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
-export interface PostProps extends RouteComponentProps<{ id: string }> {}
+export interface Post {
+  Id: number;
+  Title: string;
+  Content?: string;
+  PublishedAt: string;
+  ImageUrl: string;
+}
 
-const PostShowComponent: FC<PostProps> = ({ match }) => {
-  const postId = match.params.id;
+interface PostShowStateProps {
+  post: Post;
+}
 
+export interface PostProps extends PostShowStateProps {}
+
+const PostShowComponent: FC<PostProps> = (props) => {
   return (
-    <h2>{ `postId: ${postId} の記事だよ` }</h2>
+    <h2>{ `postId: ${props.post.Id} の記事だよ` }</h2>
   );
 };
 

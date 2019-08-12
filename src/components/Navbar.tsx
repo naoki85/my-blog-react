@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Footer: FC = () => {
+const Navbar: FC = () => {
   const classes = useStyles(theme);
 
   return (
@@ -38,4 +38,4 @@ const Footer: FC = () => {
   )
 };
 
-export default Footer;
+export default Navbar;

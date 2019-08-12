@@ -1,0 +1,33 @@
+.btn-container {
+  display: inline-block;
+  font-family: Roboto, sans-serif;
+  margin: 10px 0;
+  position: relative;
+}
+
+.btn-twitter {
+  background-color: #1da1f2;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 14px;
+  height: 27px;
+  margin: 0;
+  padding-left: 25px;
+  width: 80px;
+
+  &::before {
+    background-image: url('../images/logo_twitter.png');
+    background-size: 100%;
+    content: '';
+    display: block;
+    height: 25px;
+    left: 1px;
+    position: absolute;
+    top: 1px;
+    width: 25px;
+  }
+
+  &:hover {
+    background-color: #1da1f2;
+  }
+}

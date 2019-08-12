@@ -29,11 +29,13 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
 
   return (
     <>
-      <Paginate
-        page={props.page}
-        maxPage={props.maxPage}
-        fetchPosts={(page: number) => props.fetchPosts(page)}
-      />
+      {(props.maxPage > 1) && (
+        <Paginate
+          page={props.page}
+          maxPage={props.maxPage}
+          fetchPosts={(page: number) => props.fetchPosts(page)}
+        />
+      )}
       <Grid container spacing={4} className={classes.cardGrid}>
         {props.posts.map(post => {
           return (

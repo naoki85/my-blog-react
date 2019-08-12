@@ -7,7 +7,7 @@ import { Actions } from "../../actions";
 
 const mapStateToProps = function(state: StoreState) {
   return {
-    posts: state.posts || []
+    posts: state.posts.Posts
   }
 };
 

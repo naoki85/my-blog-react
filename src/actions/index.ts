@@ -20,14 +20,20 @@ declare let process: {
 
 const apiURL = process.env.REACT_APP_API_URL;
 
+interface FetchPostsResponse {
+  Posts: Post[];
+  MaxPage: number;
+  Page: number;
+}
+
 const fetchPostsStart = () => createAction(TypeKeys.FETCH_POSTS, {});
 const fetchPostStart = () => createAction(TypeKeys.FETCH_POST, {});
 
-const fetchPostsSuccess = (data: Post[]) =>
+const fetchPostsSuccess = (data: FetchPostsResponse) =>
   createAction(TypeKeys.FETCH_POSTS_SUCCESS, {
     data,
   });
-const fetchPostSuccess = (data: Post[]) =>
+const fetchPostSuccess = (data: FetchPostsResponse) =>
   createAction(TypeKeys.FETCH_POST_SUCCESS, {
     data,
   });
@@ -37,12 +43,18 @@ const fetchPostsFail = (error: Error) =>
 const fetchPostFail = (error: Error) =>
   createAction(TypeKeys.FETCH_POST_FAIL, { message: error.message });
 
-const fetchPosts = () => {
+const fetchPosts = (page: number) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(fetchPostsStart());
     try {
-      const response = await axios.get(`${apiURL}/posts`);
-      dispatch(fetchPostsSuccess(response.data.body.Posts));
+      const query = `?page=${page}`;
+      const response = await axios.get(`${apiURL}/posts${query}`);
+      const payload = {
+        Posts: response.data.body.Posts,
+        MaxPage: response.data.body.TotalPage,
+        Page: page,
+      };
+      dispatch(fetchPostsSuccess(payload));
     } catch (e) {
       dispatch(fetchPostsFail(e));
     }
@@ -53,8 +65,12 @@ const fetchPost = (id: number) => {
     dispatch(fetchPostStart());
     try {
       const response = await axios.get(`${apiURL}/posts/${String(id)}`);
-      const post: Post = response.data.body;
-      dispatch(fetchPostSuccess([post]));
+      const payload = {
+        Posts: [response.data.body],
+        MaxPage: 1,
+        Page: 1,
+      };
+      dispatch(fetchPostSuccess(payload));
     } catch (e) {
       dispatch(fetchPostFail(e));
     }

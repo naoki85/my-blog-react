@@ -16,10 +16,16 @@ export interface PostCategory {
   Color: string;
 }
 
+export interface PostsState {
+  Posts: Post[];
+  Page: number;
+  MaxPage: number;
+}
+
 export interface StoreState {
   type: string;
   dispatch: Dispatch;
-  posts: Post[];
+  posts: PostsState;
 }
 
 export interface Match {

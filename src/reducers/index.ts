@@ -1,7 +1,11 @@
 import { Actions, TypeKeys } from '../actions';
-import { Post } from '../types/state';
+import { PostsState } from '../types/state';
 
-export const initialState: Post[] = [];
+export const initialState: PostsState = {
+  Posts: [],
+  Page: 0,
+  MaxPage: 0,
+};
 
 export default (state = initialState, action: Actions) => {
   switch (action.type) {

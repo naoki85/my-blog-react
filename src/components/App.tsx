@@ -3,12 +3,18 @@ import PostRow from './PostRow'
 import { Post } from '../types/state'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Paginate from "./Paginate";
 
 export interface AppStateProps {
   posts: Post[];
+  page: number;
+  maxPage: number;
+}
+export interface AppDispatchProps {
+  fetchPosts: (page: number) => void;
 }
 
-interface AppProps extends AppStateProps {}
+export interface AppProps extends AppStateProps, AppDispatchProps {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,16 +28,23 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
   const classes = useStyles();
 
   return (
-    <Grid container spacing={4} className={classes.cardGrid}>
-      {props.posts.map(post => {
-        return (
-          <PostRow
-            key={post.Id}
-            post={post}
-          />
-        )
-      })}
-    </Grid>
+    <>
+      <Paginate
+        page={props.page}
+        maxPage={props.maxPage}
+        fetchPosts={(page: number) => props.fetchPosts(page)}
+      />
+      <Grid container spacing={4} className={classes.cardGrid}>
+        {props.posts.map(post => {
+          return (
+            <PostRow
+              key={post.Id}
+              post={post}
+            />
+          )
+        })}
+      </Grid>
+    </>
   );
 };
 

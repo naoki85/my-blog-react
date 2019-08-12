@@ -4,6 +4,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import {convertToHtml} from "../../utils/Markdown";
 import '../../styles/markdown.scss';
 import TweetButton from './TweetButton';
+import HatebuButton from './HatebuButton'
 
 export interface Post {
   Id: number;
@@ -39,6 +40,10 @@ const PostShowComponent: FC<PostProps> = (props) => {
         {props.post.PublishedAt}
       </Typography>
       <TweetButton
+        id={props.post.Id}
+        title={props.post.Title}
+      />
+      <HatebuButton
         id={props.post.Id}
         title={props.post.Title}
       />

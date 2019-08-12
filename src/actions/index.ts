@@ -49,9 +49,10 @@ const fetchPosts = (page: number) => {
     try {
       const query = `?page=${page}`;
       const response = await axios.get(`${apiURL}/posts${query}`);
+      const resBody = (apiURL === 'http://localhost:4000' ? response.data.body : response.data);
       const payload = {
-        Posts: response.data.body.Posts,
-        MaxPage: response.data.body.TotalPage,
+        Posts: resBody.Posts,
+        MaxPage: resBody.TotalPage,
         Page: page,
       };
       dispatch(fetchPostsSuccess(payload));
@@ -65,8 +66,9 @@ const fetchPost = (id: number) => {
     dispatch(fetchPostStart());
     try {
       const response = await axios.get(`${apiURL}/posts/${String(id)}`);
+      const post = (apiURL === 'http://localhost:4000' ? response.data.body : response.data);
       const payload = {
-        Posts: [response.data.body],
+        Posts: [post],
         MaxPage: 1,
         Page: 1,
       };

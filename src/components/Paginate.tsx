@@ -25,6 +25,28 @@ const Paginate: FC<PaginateProps> = (props: PaginateProps) => {
     );
   }, []);
 
+  const getPages = (): number[] => {
+    if (props.maxPage > 0 && props.maxPage <= 5) {
+      return range(1, props.maxPage)
+    }
+    if (props.page - 3 <= 0) {
+      return range(1, 5)
+    }
+    const tmpPages: number[] = [];
+    const iterater: number[] = [-2, -1, 0, 1, 2];
+    iterater.forEach(i => {
+      const tmpPage = props.page + i;
+      if (tmpPage > props.maxPage) {
+        return true
+      }
+      tmpPages.push(tmpPage)
+    });
+
+    return tmpPages
+  };
+
+  const pages = getPages();
+
   return (
     <div className={"paginate-area"}>
       <ul className="paginate">
@@ -35,7 +57,7 @@ const Paginate: FC<PaginateProps> = (props: PaginateProps) => {
             <Icon className={clsx('fas fa-chevron-left')} />
           </li>
         )}
-        {range(1, props.maxPage).map(i => {
+        {pages.map(i => {
           return (
             <li
               key={i}

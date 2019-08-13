@@ -10,6 +10,7 @@ import PostShow from './containers/posts/Show';
 import Footer from './containers/Footer';
 import Navbar from './containers/Navbar';
 import posts from "./reducers";
+import recommendedBooks from "./reducers/recommendedBooks";
 import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
 import * as serviceWorker from './serviceWorker';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -26,7 +27,8 @@ const history = createBrowserHistory();
 
 const rootReducer = (history: History<{}>) => combineReducers({
   router: connectRouter(history),
-  posts
+  posts,
+  recommendedBooks
 });
 
 const configureStore = (history: History<{}>) => {

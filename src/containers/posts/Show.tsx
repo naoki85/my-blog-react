@@ -2,12 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch, Action, AnyAction } from "redux";
 import PostShowComponent, { PostProps } from '../../components/posts/Show';
-import { Match, StoreState, Post } from "../../types/state";
+import { Match, StoreState, Post, RecommendedBook } from "../../types/state";
 import { Actions } from "../../actions";
+import {RecommendedBooksActions} from "../../actions/recommendedBooks";
 
 const mapStateToProps = function(state: StoreState) {
   return {
-    posts: state.posts.Posts
+    posts: state.posts.Posts,
+    recommendedBooks: state.recommendedBooks,
   }
 };
 
@@ -21,7 +23,8 @@ const mapDispatchToProps = function(
   };
 };
 
-class PostShow extends React.Component<PostProps & { posts: Post[]; match: Match; dispatch: Dispatch }> {
+class PostShow extends React.Component<PostProps &
+{ posts: Post[]; recommendedBooks: RecommendedBook[]; match: Match; dispatch: Dispatch }> {
   componentDidMount() {
     const postId = Number(this.props.match.params.id);
     const dispatch = this.props.dispatch as (
@@ -31,6 +34,7 @@ class PostShow extends React.Component<PostProps & { posts: Post[]; match: Match
       ) => Promise<void>
     ) => void | Dispatch;
     dispatch(Actions.fetchPost(postId));
+    dispatch(RecommendedBooksActions.fetchRecommendedBooks());
   }
 
   render() {
@@ -39,7 +43,7 @@ class PostShow extends React.Component<PostProps & { posts: Post[]; match: Match
       return null;
     }
 
-    return <PostShowComponent post={post} />;
+    return <PostShowComponent post={post} recommendedBooks={this.props.recommendedBooks} />;
   }
 }
 

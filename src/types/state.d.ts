@@ -26,8 +26,16 @@ export interface StoreState {
   type: string;
   dispatch: Dispatch;
   posts: PostsState;
+  recommendedBooks: RecommendedBook[];
 }
 
 export interface Match {
   params: { [key: string]: string };
+}
+
+export interface RecommendedBook {
+  Id: number;
+  Link: string;
+  ImageUrl: string;
+  ButtonUrl: string;
 }

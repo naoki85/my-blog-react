@@ -5,6 +5,7 @@ import {convertToHtml} from "../../utils/Markdown";
 import '../../styles/markdown.scss';
 import TweetButton from './TweetButton';
 import HatebuButton from './HatebuButton'
+import RecommendedBooksComponent, {RecommendedBooksProps} from './RecommendedBooks';
 
 export interface Post {
   Id: number;
@@ -18,7 +19,7 @@ interface PostShowStateProps {
   post: Post;
 }
 
-export interface PostProps extends PostShowStateProps {}
+export interface PostProps extends PostShowStateProps, RecommendedBooksProps {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,6 +53,7 @@ const PostShowComponent: FC<PostProps> = (props) => {
         className={'preview-area'}
         dangerouslySetInnerHTML={{__html: convertToHtml(props.post.Content)}}
       />
+      <RecommendedBooksComponent recommendedBooks={props.recommendedBooks}/>
     </div>
   );
 };

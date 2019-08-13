@@ -36,5 +36,33 @@
       }
     ],
     "TotalPage": 5
+  },
+  "recommended_books": {
+    "RecommendedBooks": [
+      {
+        "Id": 25,
+        "Link": "https://www.amazon.co.jp/gp/product/448866301X/ref=as_li_tl?ie=UTF8\u0026camp=247\u0026creative=1211\u0026creativeASIN=448866301X\u0026linkCode=as2\u0026tag=naoki850c-22\u0026linkId=4304b5bd47e6e0e2a7f07a311e7aa033",
+        "ImageUrl": "//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8\u0026MarketPlace=JP\u0026ASIN=448866301X\u0026ServiceVersion=20070822\u0026ID=AsinImage\u0026WS=1\u0026Format=_SL160_\u0026tag=naoki850c-22",
+        "ButtonUrl": "//ir-jp.amazon-adsystem.com/e/ir?t=naoki850c-22\u0026l=am2\u0026o=9\u0026a=448866301X"
+      },
+      {
+        "Id": 24,
+        "Link": "https://www.amazon.co.jp/gp/product/448866301X/ref=as_li_tl?ie=UTF8\u0026camp=247\u0026creative=1211\u0026creativeASIN=448866301X\u0026linkCode=as2\u0026tag=naoki850c-22\u0026linkId=4304b5bd47e6e0e2a7f07a311e7aa033",
+        "ImageUrl": "//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8\u0026MarketPlace=JP\u0026ASIN=448866301X\u0026ServiceVersion=20070822\u0026ID=AsinImage\u0026WS=1\u0026Format=_SL160_\u0026tag=naoki850c-22",
+        "ButtonUrl": "//ir-jp.amazon-adsystem.com/e/ir?t=naoki850c-22\u0026l=am2\u0026o=9\u0026a=448866301X"
+      },
+      {
+        "Id": 23,
+        "Link": "https://www.amazon.co.jp/gp/product/448866301X/ref=as_li_tl?ie=UTF8\u0026camp=247\u0026creative=1211\u0026creativeASIN=448866301X\u0026linkCode=as2\u0026tag=naoki850c-22\u0026linkId=4304b5bd47e6e0e2a7f07a311e7aa033",
+        "ImageUrl": "//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8\u0026MarketPlace=JP\u0026ASIN=448866301X\u0026ServiceVersion=20070822\u0026ID=AsinImage\u0026WS=1\u0026Format=_SL160_\u0026tag=naoki850c-22",
+        "ButtonUrl": "//ir-jp.amazon-adsystem.com/e/ir?t=naoki850c-22\u0026l=am2\u0026o=9\u0026a=448866301X"
+      },
+      {
+        "Id": 22,
+        "Link": "https://www.amazon.co.jp/gp/product/448866301X/ref=as_li_tl?ie=UTF8\u0026camp=247\u0026creative=1211\u0026creativeASIN=448866301X\u0026linkCode=as2\u0026tag=naoki850c-22\u0026linkId=4304b5bd47e6e0e2a7f07a311e7aa033",
+        "ImageUrl": "//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8\u0026MarketPlace=JP\u0026ASIN=448866301X\u0026ServiceVersion=20070822\u0026ID=AsinImage\u0026WS=1\u0026Format=_SL160_\u0026tag=naoki850c-22",
+        "ButtonUrl": "//ir-jp.amazon-adsystem.com/e/ir?t=naoki850c-22\u0026l=am2\u0026o=9\u0026a=448866301X"
+      }
+    ]
   }
 }

@@ -33,6 +33,10 @@ export interface Match {
   params: { [key: string]: string };
 }
 
+export interface Location {
+  pathname: string;
+}
+
 export interface RecommendedBook {
   Id: number;
   Link: string;

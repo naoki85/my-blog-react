@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch, Action, AnyAction } from "redux";
 import PostShowComponent, { PostProps } from '../../components/posts/Show';
-import { Match, StoreState, Post, RecommendedBook } from "../../types/state";
+import { Match, StoreState, Post, RecommendedBook, Location } from "../../types/state";
 import { Actions } from "../../actions";
 import {RecommendedBooksActions} from "../../actions/recommendedBooks";
+import ReactGA from 'react-ga';
 
 const mapStateToProps = function(state: StoreState) {
   return {
@@ -24,8 +25,12 @@ const mapDispatchToProps = function(
 };
 
 class PostShow extends React.Component<PostProps &
-{ posts: Post[]; recommendedBooks: RecommendedBook[]; match: Match; dispatch: Dispatch }> {
+{ posts: Post[]; recommendedBooks: RecommendedBook[]; match: Match; dispatch: Dispatch; location: Location }> {
   componentDidMount() {
+    const { pathname } = this.props.location;
+    ReactGA.set({ page: pathname });
+    ReactGA.pageview(pathname);
+
     const postId = Number(this.props.match.params.id);
     const dispatch = this.props.dispatch as (
       thunk: (

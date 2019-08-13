@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch, Action, AnyAction } from "redux";
-import { StoreState } from "../types/state";
+import {Location, StoreState} from "../types/state";
 import { Actions } from '../actions';
 import AppComponent, { AppProps, AppStateProps, AppDispatchProps } from '../components/App';
+import ReactGA from "react-ga";
 
 export const mapStateToProps = function(state: StoreState): AppStateProps {
   return {
@@ -31,8 +32,12 @@ const mapDispatchToProps = function(
   };
 };
 
-class Posts extends React.Component<AppProps & { dispatch: Dispatch }> {
+class Posts extends React.Component<AppProps & { dispatch: Dispatch; location: Location }> {
   componentDidMount() {
+    const { pathname } = this.props.location;
+    ReactGA.set({ page: pathname });
+    ReactGA.pageview(pathname);
+
     const dispatch = this.props.dispatch as (
       thunk: (
         dispatch: Dispatch<AnyAction>,

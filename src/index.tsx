@@ -16,7 +16,8 @@ import * as serviceWorker from './serviceWorker';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
-import theme from './styles/theme'
+import theme from './styles/theme';
+import ReactGA from 'react-ga';
 
 export interface CustomWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION__: () => StoreEnhancerStoreCreator<{}, {}>;
@@ -24,6 +25,11 @@ export interface CustomWindow extends Window {
 declare let window: CustomWindow;
 
 const history = createBrowserHistory();
+ReactGA.initialize('UA-123372116-2');
+history.listen(({ pathname }) => {
+  ReactGA.set({ page: pathname });
+  ReactGA.pageview(pathname);
+});
 
 const rootReducer = (history: History<{}>) => combineReducers({
   router: connectRouter(history),

@@ -54,7 +54,7 @@ const PostRow: FC<PostRowProps> = (props: PostRowProps) => {
               </Typography>
             </CardContent>
           </div>
-          <Hidden xsDown>
+          <Hidden>
             <CardMedia
               className={classes.cardMedia}
               image={props.post.ImageUrl}

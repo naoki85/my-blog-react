@@ -15,7 +15,7 @@
       {
         "Id": 2,
         "PostCategoryId": 1,
-        "Title": "test title 2",
+        "Title": "I implemented nand2tetris vm translator with Go (Chapter 7 and 8).",
         "Content": "test content 2",
         "ImageUrl": "http://d29xhtkvbwm2ne.cloudfront.net/1563750402_514ifs4Y5bL._SX352_BO1,204,203,200_.jpg",
         "PublishedAt": "2019-01-02",

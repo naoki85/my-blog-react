@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import Helmet from 'react-helmet';
 import PostRow from './PostRow'
 import { Post } from '../types/state'
 import Grid from '@material-ui/core/Grid';
@@ -30,15 +29,6 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
 
   return (
     <>
-      <Helmet>
-        <meta name={'description'} content={'本ブログは naoki85 によりメンテナンスされているサイトです。主に本の紹介や勉強したことをブログにまとめていきます。'} />
-        <meta name={'og:url'} content={'https://blog.naoki85.me'} />
-        <meta name={'og:title'} content={'ブログ一覧'} />
-        <meta name={'og:description'} content={'本ブログは naoki85 によりメンテナンスされているサイトです。主に本の紹介や勉強したことをブログにまとめていきます。'} />
-        <meta name={'og:image'} content={'/ogp.png'} />
-        <meta name={'twitter:card'} content={'summary_large_image'} />
-      </Helmet>
-
       {(props.maxPage > 1) && (
         <Paginate
           page={props.page}

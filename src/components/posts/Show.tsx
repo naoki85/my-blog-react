@@ -42,11 +42,12 @@ const PostShowComponent: FC<PostProps> = (props) => {
     <>
       <Helmet>
         <meta name={'description'} content={getDescription()} />
-        <meta name={'og:url'} content={`https://blog.naoki85.me/posts/${props.post.Id}`} />
-        <meta name={'og:title'} content={props.post.Title} />
-        <meta name={'og:description'} content={getDescription()} />
-        <meta name={'og:image'} content={props.post.ImageUrl} />
+        <meta property={'og:url'} content={`https://blog.naoki85.me/posts/${props.post.Id}`} />
+        <meta property={'og:title'} content={props.post.Title} />
+        <meta property={'og:description'} content={getDescription()} />
+        <meta property={'og:image'} content={props.post.ImageUrl} />
         <meta name={'twitter:card'} content={'summary'} />
+        <title>{props.post.Title}</title>
       </Helmet>
 
       <div className={classes.postArea}>

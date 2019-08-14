@@ -9,7 +9,7 @@ export interface TweetButtonStateProps {
 const TweetButton: FC<TweetButtonStateProps> = (props: TweetButtonStateProps) => {
   const getLinkHref = (): string => {
     const baseUrl = 'https://twitter.com/share';
-    const url = 'https://blog.naoki85.me/posts/' + props.id;
+    const url = 'https://naoki85.me/posts/' + props.id;
 
     return baseUrl + '?text=' + props.title + '&url=' + url;
   };

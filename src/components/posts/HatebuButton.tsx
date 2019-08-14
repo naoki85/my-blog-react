@@ -9,7 +9,7 @@ export interface HatebuButtonStateProps {
 const HatebuButton: FC<HatebuButtonStateProps> = (props: HatebuButtonStateProps) => {
   const getLinkHref = (): string => {
     const baseUrl = 'http://b.hatena.ne.jp/add?mode=confirm';
-    const url = 'https://blog.naoki85.me/posts/' + props.id;
+    const url = 'https://naoki85.me/posts/' + props.id;
 
     return baseUrl + '&title=' + encodeURIComponent(props.title) + '&url=' + encodeURIComponent(url);
   };

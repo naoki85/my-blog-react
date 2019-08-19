@@ -7,6 +7,7 @@ import '../../styles/markdown.scss';
 import TweetButton from './TweetButton';
 import HatebuButton from './HatebuButton'
 import RecommendedBooksComponent, {RecommendedBooksProps} from './RecommendedBooks';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export interface Post {
   Id: number;
@@ -20,12 +21,20 @@ interface PostShowStateProps {
   post: Post;
 }
 
-export interface PostProps extends PostShowStateProps, RecommendedBooksProps {}
+export interface PostProps extends PostShowStateProps, RecommendedBooksProps {
+  loading: boolean;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     postArea: {
       marginTop: theme.spacing(3),
+    },
+    progress: {
+      margin: theme.spacing(3),
+    },
+    progressArea: {
+      textAlign: 'center',
     },
   })
 );
@@ -50,6 +59,11 @@ const PostShowComponent: FC<PostProps> = (props) => {
         <title>{props.post.Title}</title>
       </Helmet>
 
+      {(props.loading) && (
+        <div className={classes.progressArea}>
+          <CircularProgress className={classes.progress} />
+        </div>
+      )}
       <div className={classes.postArea}>
         <Typography variant="h4">
           {props.post.Title}

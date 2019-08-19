@@ -10,6 +10,7 @@ import ReactGA from 'react-ga';
 const mapStateToProps = function(state: StoreState) {
   return {
     posts: state.posts.Posts,
+    loading: state.posts.loading,
     recommendedBooks: state.recommendedBooks,
   }
 };
@@ -48,7 +49,7 @@ class PostShow extends React.Component<PostProps &
       return null;
     }
 
-    return <PostShowComponent post={post} recommendedBooks={this.props.recommendedBooks} />;
+    return <PostShowComponent post={post} loading={this.props.loading} recommendedBooks={this.props.recommendedBooks} />;
   }
 }
 

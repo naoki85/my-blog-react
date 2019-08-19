@@ -20,6 +20,7 @@ export interface PostsState {
   Posts: Post[];
   Page: number;
   MaxPage: number;
+  loading: boolean;
 }
 
 export interface StoreState {

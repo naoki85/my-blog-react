@@ -4,11 +4,13 @@ import { Post } from '../types/state'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Paginate from "./Paginate";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export interface AppStateProps {
   posts: Post[];
   page: number;
   maxPage: number;
+  loading: boolean;
 }
 export interface AppDispatchProps {
   fetchPosts: (page: number) => void;
@@ -21,6 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
     cardGrid: {
       marginTop: theme.spacing(3),
     },
+    progress: {
+      margin: theme.spacing(3),
+    },
+    progressArea: {
+      textAlign: 'center',
+    },
   })
 );
 
@@ -29,6 +37,11 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
 
   return (
     <>
+      {(props.loading) && (
+        <div className={classes.progressArea}>
+          <CircularProgress className={classes.progress} />
+        </div>
+      )}
       {(props.maxPage > 1) && (
         <Paginate
           page={props.page}

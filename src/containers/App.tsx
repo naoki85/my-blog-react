@@ -11,6 +11,7 @@ export const mapStateToProps = function(state: StoreState): AppStateProps {
     posts: state.posts.Posts,
     page: state.posts.Page,
     maxPage: state.posts.MaxPage,
+    loading: state.posts.loading
   }
 };
 

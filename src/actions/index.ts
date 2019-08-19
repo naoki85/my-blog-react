@@ -84,6 +84,8 @@ export const DispatchActions = {
   fetchPostsFail,
   fetchPostSuccess,
   fetchPostFail,
+  fetchPostsStart,
+  fetchPostStart,
 };
 export const Actions = {
   ...DispatchActions,

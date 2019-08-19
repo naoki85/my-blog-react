@@ -9,6 +9,7 @@ import App from './containers/App';
 import PostShow from './containers/posts/Show';
 import Footer from './containers/Footer';
 import Navbar from './containers/Navbar';
+import ErrorsNotFound from './containers/errors/NotFound';
 import posts from "./reducers";
 import recommendedBooks from "./reducers/recommendedBooks";
 import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
@@ -56,8 +57,9 @@ ReactDOM.render(
         <Container maxWidth="lg">
           <Switch>
             <Route path={'/posts/:id'} component={PostShow} />
+            <Route exact={true} path={'/not_found'} component={ErrorsNotFound} />
             <Route exact={true} path={'/'} component={App} />
-            <Redirect to={'/'} />
+            <Redirect to={'/not_found'} />
           </Switch>
         </Container>
         <Footer />

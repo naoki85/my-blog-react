@@ -1279,9 +1279,9 @@
     glob-to-regexp "^0.3.0"
 
 "@naoki85/react-simple-pagination-component@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@naoki85/react-simple-pagination-component/-/react-simple-pagination-component-0.2.2.tgz#f956869da33b83273d6e3478646ad79a7ba40307"
-  integrity sha512-QF6GjjDwaOuqh89dnKwTrZcKYtXDPMVubXeZQ4TAiCDr2SJRCWr3banK8Fvn0RCWs+3sB9iSddh7x5r1xDuqJA==
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@naoki85/react-simple-pagination-component/-/react-simple-pagination-component-0.2.3.tgz#8c3cb887168ce64401ddd61ebe72a37f5ebc6e6f"
+  integrity sha512-bDWCzAfrwg7egeNxgWrK1+vyJY4C56dW1a+cQg1Ckev/H4x7euViqwlYr0vFPT8n3n6Is6XRLFcEhZ0yl+J79w==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.21"
     "@fortawesome/free-solid-svg-icons" "^5.10.1"

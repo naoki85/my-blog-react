@@ -19,6 +19,10 @@ declare let process: {
 };
 
 const apiURL = process.env.REACT_APP_API_URL;
+const defaultRequestHeaders = {
+  "Content-Type": "application/json"
+};
+const defaultRequestBody = {};
 
 interface FetchPostsResponse {
   Posts: Post[];
@@ -48,7 +52,10 @@ const fetchPosts = (page: number) => {
     dispatch(fetchPostsStart());
     try {
       const query = `?page=${page}`;
-      const response = await axios.get(`${apiURL}/posts${query}`);
+      const response = await axios.get(`${apiURL}/posts${query}`, {
+        headers: defaultRequestHeaders,
+        data: defaultRequestBody
+      });
       const resBody = (apiURL === 'http://localhost:4000' ? response.data.body : response.data);
       const payload = {
         Posts: resBody.Posts,
@@ -66,7 +73,10 @@ const fetchPost = (id: number) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(fetchPostStart());
     try {
-      const response = await axios.get(`${apiURL}/posts/${String(id)}`);
+      const response = await axios.get(`${apiURL}/posts/${String(id)}`, {
+        headers: defaultRequestHeaders,
+        data: defaultRequestBody
+      });
       const post = (apiURL === 'http://localhost:4000' ? response.data.body : response.data);
       const payload = {
         Posts: [post],

@@ -16,6 +16,10 @@ declare let process: {
 };
 
 const apiURL = process.env.REACT_APP_API_URL;
+const defaultRequestHeaders = {
+  "Content-Type": "application/json"
+};
+const defaultRequestBody = {};
 
 const fetchRecommendedBooksStart = () => createAction(TypeKeys.FETCH_RECOMMENDED_BOOKS, {});
 
@@ -31,7 +35,10 @@ const fetchRecommendedBooks = () => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(fetchRecommendedBooksStart());
     try {
-      const response = await axios.get(`${apiURL}/recommended_books`);
+      const response = await axios.get(`${apiURL}/recommended_books`, {
+        headers: defaultRequestHeaders,
+        data: defaultRequestBody
+      });
       const resBody = (apiURL === 'http://localhost:4000' ? response.data.body : response.data);
       dispatch(fetchRecommendedBooksSuccess(resBody.RecommendedBooks));
     } catch (e) {

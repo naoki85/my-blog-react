@@ -20,7 +20,7 @@ declare let process: {
 
 const apiURL = process.env.REACT_APP_API_URL;
 const defaultRequestHeaders = {
-  "Content-Type": "application/json"
+  "content-type": "application/json"
 };
 const defaultRequestBody = {};
 

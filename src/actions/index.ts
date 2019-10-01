@@ -65,7 +65,7 @@ const fetchPosts = (page: number) => {
       dispatch(fetchPostsSuccess(payload));
     } catch (e) {
       dispatch(fetchPostsFail(e));
-      // window.location.href = '/not_found';
+      window.location.href = '/not_found';
     }
   };
 };
@@ -86,7 +86,7 @@ const fetchPost = (id: number) => {
       dispatch(fetchPostSuccess(payload));
     } catch (e) {
       dispatch(fetchPostFail(e));
-      // window.location.href = '/not_found';
+      window.location.href = '/not_found';
     }
   };
 };

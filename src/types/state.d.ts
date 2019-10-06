@@ -28,6 +28,7 @@ export interface StoreState {
   dispatch: Dispatch;
   posts: PostsState;
   recommendedBooks: RecommendedBook[];
+  auth: Auth;
 }
 
 export interface Match {
@@ -43,4 +44,10 @@ export interface RecommendedBook {
   Link: string;
   ImageUrl: string;
   ButtonUrl: string;
+}
+
+type AuthenticationStatus = "success" | "error";
+export interface Auth {
+  Status?: AuthenticationStatus;
+  Message?: string;
 }

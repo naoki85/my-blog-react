@@ -1,11 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-const AdminPostsIndexComponent: FC = () => {
-  return (
-    <>
-      <h1>Dashboard</h1>
-    </>
-  );
-};
+class AdminPostsIndex extends React.Component {
+  render() {
+    return <><h1>Dashboard</h1></>;
+  }
+}
 
-export default AdminPostsIndexComponent;
+export default AdminPostsIndex;

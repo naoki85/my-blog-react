@@ -1,14 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import AdminPostsIndexComponent from '../../../components/admin/posts/Index';
 
-class AdminPostsIndex extends React.Component {
-  render() {
-    return <AdminPostsIndexComponent />;
-  }
-}
+const AdminPostsIndex: React.FC = () => {
+  return <AdminPostsIndexComponent />;
+};
 
-export default connect(
-  // mapStateToProps,
-  // mapDispatchToProps
-)(AdminPostsIndex);
+export default AdminPostsIndex;

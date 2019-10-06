@@ -9,6 +9,7 @@ import App from './containers/App';
 import PostShow from './containers/posts/Show';
 import Footer from './containers/Footer';
 import Navbar from './containers/Navbar';
+import WithAuth from "./containers/admin/Admin";
 import adminLogin from "./containers/admin/Login";
 import adminPostsIndex from "./containers/admin/posts/Index";
 import ErrorsNotFound from './containers/errors/NotFound';
@@ -63,7 +64,7 @@ ReactDOM.render(
             <Route path={'/posts/:id'} component={PostShow} />
             <Route exact={true} path={'/not_found'} component={ErrorsNotFound} />
             <Route exact={true} path={'/admin/login'} component={adminLogin} />
-            <Route exact={true} path={'/admin/posts'} component={adminPostsIndex} />
+            <Route exact={true} path={'/admin/posts'} component={WithAuth(adminPostsIndex)} />
             <Route exact={true} path={'/'} component={App} />
             <Redirect to={'/not_found'} />
           </Switch>

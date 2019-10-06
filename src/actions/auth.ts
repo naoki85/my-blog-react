@@ -13,10 +13,12 @@ export enum TypeKeys {
 declare let process: {
   env: {
     REACT_APP_API_URL: string;
+    LOCAL_STORAGE_ITEM_NAME: string;
   };
 };
 
 const apiURL = process.env.REACT_APP_API_URL;
+const itemName = process.env.LOCAL_STORAGE_ITEM_NAME;
 const defaultRequestHeaders = {
   "Content-Type": "application/json"
 };
@@ -40,7 +42,7 @@ const tryLogin = (email: string, password: string) => {
     try {
       const response = await axios.post(`${apiURL}/login`, JSON.stringify(mergedBody),
         {headers: defaultRequestHeaders});
-      localStorage.setItem('blogNaoki85AuthenticationToken', response.data);
+      localStorage.setItem(itemName, response.data);
       dispatch(loginSuccess({
         Status: 'success',
         Message: 'Login succeed.'

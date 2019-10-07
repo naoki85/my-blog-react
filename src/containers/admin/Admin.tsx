@@ -1,10 +1,12 @@
 import React from "react";
+import {Dispatch} from 'redux';
 import { RouteComponentProps } from 'react-router';
-import {localStorageItemName} from '../../config/const';
+import { localStorageItemName } from '../../config/const';
+import CustomizedMenus from '../../components/admin/Menu';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function withAuth(AuthComponent: any) {
-  return class AuthWrapped extends React.Component<RouteComponentProps> {
+  return class AuthWrapped extends React.Component<RouteComponentProps & { dispatch: Dispatch }> {
     componentWillMount() {
       const token = localStorage.getItem(localStorageItemName);
       if (!token) {
@@ -13,9 +15,12 @@ export default function withAuth(AuthComponent: any) {
     }
 
     render() {
-      if (localStorage.getItem('blogNaoki85AuthenticationToken')) {
+      if (localStorage.getItem(localStorageItemName)) {
         return (
-          <AuthComponent history={this.props.history} />
+          <>
+            <CustomizedMenus />
+            <AuthComponent history={this.props.history} />
+          </>
         )
       } else {
         return null;

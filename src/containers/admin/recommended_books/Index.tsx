@@ -1,9 +1,43 @@
 import React from "react";
-// import { connect } from "react-redux";
-import AdminRecommendedBooksIndexComponent from '../../../components/admin/recommended_books/Index';
+import { Dispatch, Action, AnyAction } from "redux";
+import { connect } from "react-redux";
+import {RecommendedBooksActions} from "../../../actions/recommendedBooks";
+import {StoreState, RecommendedBook} from "../../../types/state";
+import AdminRecommendedBooksIndexComponent, { RecommendedBooksProps } from '../../../components/admin/recommended_books/Index';
 
-const AdminRecommendedBooksIndex: React.FC = () => {
-  return <AdminRecommendedBooksIndexComponent />;
+const mapStateToProps = function(state: StoreState) {
+  return {
+    recommendedBooks: state.recommendedBooks,
+  }
 };
 
-export default AdminRecommendedBooksIndex;
+const mapDispatchToProps = (dispatch: Dispatch<Action<{}>>): {
+  dispatch: Dispatch<Action<{}>>;
+} => {
+  return {
+    dispatch,
+  };
+};
+
+class AdminRecommendedBooksIndex extends React.Component<RecommendedBooksProps &
+{ dispatch: Dispatch; recommendedBooks: RecommendedBook[] }> {
+  componentDidMount() {
+    const dispatch = this.props.dispatch as (
+      thunk: (
+        dispatch: Dispatch<AnyAction>,
+        getState: () => StoreState
+      ) => Promise<void>
+    ) => void | Dispatch;
+    dispatch(RecommendedBooksActions.fetchRecommendedBooks());
+  }
+
+  render() {
+    return <AdminRecommendedBooksIndexComponent recommendedBooks={this.props.recommendedBooks} />;
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminRecommendedBooksIndex);
+

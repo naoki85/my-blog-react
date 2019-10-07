@@ -9,6 +9,7 @@ import {
 import {AuthActions} from '../../actions/auth';
 import {Dispatch, AnyAction, Action} from 'redux';
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 import {StoreState} from '../../types/state';
 import Button from '@material-ui/core/Button';
 import Menu, {MenuProps} from '@material-ui/core/Menu';
@@ -51,6 +52,10 @@ const useStyles = makeStyles((theme: Theme) =>
     rootDiv: {
       marginTop: theme.spacing(2),
     },
+    menuItemLink: {
+      color: "rgba(0, 0, 0, 0.87)",
+      textDecoration: "none"
+    },
   })
 );
 
@@ -61,10 +66,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Action<{}>>): {
     dispatch,
   };
 };
-
-// interface MenuDispatchProps {
-//   dispatch: Dispatch<Action<{}>>;
-// }
 
 const CustomizedMenus: React.FC<{ dispatch: Dispatch }> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -107,10 +108,14 @@ const CustomizedMenus: React.FC<{ dispatch: Dispatch }> = (props) => {
         onClose={handleClose}
       >
         <StyledMenuItem>
-          <ListItemText primary="Posts" />
+          <Link to={'/admin/posts'} className={classes.menuItemLink}>
+            <ListItemText primary="Posts" />
+          </Link>
         </StyledMenuItem>
         <StyledMenuItem>
-          <ListItemText primary="Recommended books" />
+          <Link to={'/admin/recommended_books'} className={classes.menuItemLink}>
+            <ListItemText primary="Recommended books" />
+          </Link>
         </StyledMenuItem>
         <StyledMenuItem onClick={handleLogout}>
           <ListItemText primary="Logout" />

@@ -12,6 +12,7 @@ import Navbar from './containers/Navbar';
 import WithAuth from "./containers/admin/Admin";
 import adminLogin from "./containers/admin/Login";
 import adminPostsIndex from "./containers/admin/posts/Index";
+import adminRecommendedBooksIndex from "./containers/admin/recommended_books/Index";
 import ErrorsNotFound from './containers/errors/NotFound';
 import posts from "./reducers";
 import recommendedBooks from "./reducers/recommendedBooks";
@@ -65,6 +66,7 @@ ReactDOM.render(
             <Route exact={true} path={'/not_found'} component={ErrorsNotFound} />
             <Route exact={true} path={'/admin/login'} component={adminLogin} />
             <Route exact={true} path={'/admin/posts'} component={WithAuth(adminPostsIndex)} />
+            <Route exact={true} path={'/admin/recommended_books'} component={WithAuth(adminRecommendedBooksIndex)} />
             <Route exact={true} path={'/'} component={App} />
             <Redirect to={'/not_found'} />
           </Switch>

@@ -23,11 +23,16 @@ export interface PostsState {
   loading: boolean;
 }
 
+export interface RecommendedBooksStore {
+  Books: RecommendedBook[];
+  loading: boolean;
+}
+
 export interface StoreState {
   type: string;
   dispatch: Dispatch;
   posts: PostsState;
-  recommendedBooks: RecommendedBook[];
+  recommendedBooks: RecommendedBooksStore;
   auth: Auth;
 }
 

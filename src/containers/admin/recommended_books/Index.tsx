@@ -7,7 +7,8 @@ import AdminRecommendedBooksIndexComponent, { RecommendedBooksProps } from '../.
 
 const mapStateToProps = function(state: StoreState) {
   return {
-    recommendedBooks: state.recommendedBooks,
+    recommendedBooks: state.recommendedBooks.Books,
+    loading: state.recommendedBooks.loading,
   }
 };
 
@@ -32,7 +33,10 @@ class AdminRecommendedBooksIndex extends React.Component<RecommendedBooksProps &
   }
 
   render() {
-    return <AdminRecommendedBooksIndexComponent recommendedBooks={this.props.recommendedBooks} />;
+    return <AdminRecommendedBooksIndexComponent
+      recommendedBooks={this.props.recommendedBooks}
+      loading={this.props.loading}
+      dispatch={this.props.dispatch} />;
   }
 }
 
@@ -40,4 +44,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AdminRecommendedBooksIndex);
-

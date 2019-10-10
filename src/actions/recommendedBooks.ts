@@ -3,6 +3,7 @@ import { RecommendedBook } from '../types/state';
 import { ActionsUnion, createAction } from './types';
 import { Dispatch, AnyAction } from 'redux';
 import { apiURL, localStorageItemName } from '../config/const';
+import { history } from '../index';
 
 export enum TypeKeys {
   FETCH_RECOMMENDED_BOOKS = 'FETCH_RECOMMENDED_BOOKS',
@@ -59,13 +60,21 @@ const createRecommendedBooks = (link: string, imageUrl: string, buttonUrl: strin
     mergedHeader = Object.assign(mergedHeader, {
       Authorization: 'Bearer ' + token,
     });
+
     try {
       await axios.post(`${apiURL}/recommended_books`,
         JSON.stringify(mergedBody),
         { headers: mergedHeader });
       dispatch(createRecommendedBooksSuccess());
     } catch (e) {
-      dispatch(createRecommendedBooksFail(e));
+      if (e.response.status === 401) {
+        // eslint-disable-next-line no-console
+        console.log('logout action');
+        localStorage.setItem(localStorageItemName, '');
+        history.push('/admin/login');
+      } else {
+        dispatch(createRecommendedBooksFail(e));
+      }
     }
   };
 };

@@ -11,7 +11,7 @@ const mapStateToProps = function(state: StoreState) {
   return {
     posts: state.posts.Posts,
     loading: state.posts.loading,
-    recommendedBooks: state.recommendedBooks,
+    recommendedBooks: state.recommendedBooks.Books,
   }
 };
 

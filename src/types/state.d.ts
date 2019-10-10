@@ -23,11 +23,17 @@ export interface PostsState {
   loading: boolean;
 }
 
+export interface RecommendedBooksStore {
+  Books: RecommendedBook[];
+  loading: boolean;
+}
+
 export interface StoreState {
   type: string;
   dispatch: Dispatch;
   posts: PostsState;
-  recommendedBooks: RecommendedBook[];
+  recommendedBooks: RecommendedBooksStore;
+  auth: Auth;
 }
 
 export interface Match {
@@ -43,4 +49,10 @@ export interface RecommendedBook {
   Link: string;
   ImageUrl: string;
   ButtonUrl: string;
+}
+
+type AuthenticationStatus = "success" | "error";
+export interface Auth {
+  Status?: AuthenticationStatus;
+  Message?: string;
 }

@@ -9,9 +9,14 @@ import App from './containers/App';
 import PostShow from './containers/posts/Show';
 import Footer from './containers/Footer';
 import Navbar from './containers/Navbar';
+import WithAuth from "./containers/admin/Admin";
+import adminLogin from "./containers/admin/Login";
+import adminPostsIndex from "./containers/admin/posts/Index";
+import adminRecommendedBooksIndex from "./containers/admin/recommended_books/Index";
 import ErrorsNotFound from './containers/errors/NotFound';
 import posts from "./reducers";
 import recommendedBooks from "./reducers/recommendedBooks";
+import auth from "./reducers/auth";
 import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
 import * as serviceWorker from './serviceWorker';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,7 +30,7 @@ export interface CustomWindow extends Window {
 }
 declare let window: CustomWindow;
 
-const history = createBrowserHistory();
+export const history = createBrowserHistory();
 ReactGA.initialize('UA-123372116-2');
 history.listen(({ pathname }) => {
   ReactGA.set({ page: pathname });
@@ -35,7 +40,8 @@ history.listen(({ pathname }) => {
 const rootReducer = (history: History<{}>) => combineReducers({
   router: connectRouter(history),
   posts,
-  recommendedBooks
+  recommendedBooks,
+  auth
 });
 
 const configureStore = (history: History<{}>) => {
@@ -58,6 +64,9 @@ ReactDOM.render(
           <Switch>
             <Route path={'/posts/:id'} component={PostShow} />
             <Route exact={true} path={'/not_found'} component={ErrorsNotFound} />
+            <Route exact={true} path={'/admin/login'} component={adminLogin} />
+            <Route exact={true} path={'/admin/posts'} component={WithAuth(adminPostsIndex)} />
+            <Route exact={true} path={'/admin/recommended_books'} component={WithAuth(adminRecommendedBooksIndex)} />
             <Route exact={true} path={'/'} component={App} />
             <Redirect to={'/not_found'} />
           </Switch>

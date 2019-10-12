@@ -13,7 +13,7 @@ export interface AppStateProps {
   loading: boolean;
 }
 export interface AppDispatchProps {
-  fetchPosts: (page: number) => void;
+  fetchPosts: (page: number, all: boolean) => void;
 }
 
 export interface AppProps extends AppStateProps, AppDispatchProps {}
@@ -46,7 +46,7 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
         <ReactSimplePaginationComponent
           page={props.page}
           maxPage={props.maxPage}
-          onClickAction={(page: number) => props.fetchPosts(page)}
+          onClickAction={(page: number) => props.fetchPosts(page, false)}
         />
       )}
       <Grid container spacing={4} className={classes.cardGrid}>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Post } from '../types/state';
 import { ActionsUnion, createAction } from './types';
 import { Dispatch, AnyAction } from 'redux';
+import {localStorageItemName} from "../config/const";
 
 export enum TypeKeys {
   FETCH_POSTS = 'FETCH_POSTS',
@@ -47,13 +48,23 @@ const fetchPostsFail = (error: Error) =>
 const fetchPostFail = (error: Error) =>
   createAction(TypeKeys.FETCH_POST_FAIL, { message: error.message });
 
-const fetchPosts = (page: number) => {
+const fetchPosts = (page: number, all: boolean) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(fetchPostsStart());
+    let headers = {};
     try {
+      if (all) {
+        const token = localStorage.getItem(localStorageItemName);
+        const mergedHeader = Object.assign({}, defaultRequestHeaders);
+        headers = Object.assign(mergedHeader, {
+          Authorization: 'Bearer ' + token,
+        });
+      } else {
+        headers = defaultRequestHeaders;
+      }
       const query = `?page=${page}`;
       const response = await axios.get(`${apiURL}/posts${query}`, {
-        headers: defaultRequestHeaders,
+        headers,
         data: defaultRequestBody
       });
       const resBody = (apiURL === 'http://localhost:4000' ? response.data.body : response.data);

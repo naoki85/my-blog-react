@@ -29,7 +29,7 @@ const mapDispatchToProps = function(
 
   return {
     dispatch,
-    fetchPosts: (page: number) => dispatchOverThunk(Actions.fetchPosts(page))
+    fetchPosts: (page: number) => dispatchOverThunk(Actions.fetchPosts(page, false))
   };
 };
 
@@ -45,7 +45,7 @@ class Posts extends React.Component<AppProps & { dispatch: Dispatch; location: L
         getState: () => StoreState
       ) => Promise<void>
     ) => void | Dispatch;
-    dispatch(Actions.fetchPosts(1));
+    dispatch(Actions.fetchPosts(1, false));
   }
   render() {
     return <AppComponent {...this.props} />;

@@ -9,6 +9,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ReactSimplePaginationComponent from '@naoki85/react-simple-pagination-component';
+import Button from "@material-ui/core/Button";
+import {Link} from "react-router-dom";
 
 interface PostStateProps {
   posts: Post[];
@@ -39,6 +41,12 @@ const useStyles = makeStyles((theme: Theme) =>
     progressArea: {
       textAlign: 'center',
     },
+    buttonWrapper: {
+      margin: theme.spacing(3),
+    },
+    buttonLink: {
+      textDecoration: "none"
+    },
   }),
 );
 
@@ -47,6 +55,15 @@ const AdminPostsIndex: React.FC<PostsProps> = (props) => {
 
   return (
     <>
+      <Link to={'/admin/posts/new'} className={classes.buttonLink}>
+        <Button
+          className={classes.buttonWrapper}
+          variant="contained"
+          color="secondary"
+        >
+          Create
+        </Button>
+      </Link>
       {(props.loading) && (
         <div className={classes.progressArea}>
           <CircularProgress className={classes.progress} />

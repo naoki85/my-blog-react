@@ -3,7 +3,7 @@ import { Dispatch, Action, AnyAction } from "redux";
 import { connect } from "react-redux";
 import { Actions } from "../../../actions/index";
 import { StoreState } from "../../../types/state";
-import AdminPostsIndexComponent, { PostsProps  } from '../../../components/admin/posts/Index';
+import AdminPostsIndexComponent, { PostsProps, PostDispatchProps  } from '../../../components/admin/posts/Index';
 
 const mapStateToProps = function(state: StoreState) {
   return {
@@ -14,11 +14,19 @@ const mapStateToProps = function(state: StoreState) {
   }
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Action<{}>>): {
+const mapDispatchToProps = (dispatch: Dispatch<Action<{}>>): PostDispatchProps & {
   dispatch: Dispatch<Action<{}>>;
 } => {
+  const dispatchOverThunk = dispatch as (
+    thunk: (
+      dispatch: Dispatch<AnyAction>,
+      getState: () => StoreState
+    ) => Promise<void>
+  ) => void | Dispatch;
+
   return {
     dispatch,
+    fetchPosts: (page: number) => dispatchOverThunk(Actions.fetchPosts(page, true))
   };
 };
 
@@ -34,12 +42,7 @@ class AdminPostsIndex extends React.Component<PostsProps & { dispatch: Dispatch 
   }
 
   render() {
-    return <AdminPostsIndexComponent
-      posts={this.props.posts}
-      page={this.props.page}
-      maxPage={this.props.maxPage}
-      loading={this.props.loading}
-    />;
+    return <AdminPostsIndexComponent {...this.props} />;
   }
 }
 

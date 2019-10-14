@@ -8,6 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import ReactSimplePaginationComponent from '@naoki85/react-simple-pagination-component';
 
 interface PostStateProps {
   posts: Post[];
@@ -16,7 +17,11 @@ interface PostStateProps {
   loading: boolean;
 }
 
-export interface PostsProps extends PostStateProps {}
+export interface PostDispatchProps {
+  fetchPosts: (page: number, all: boolean) => void;
+}
+
+export interface PostsProps extends PostStateProps, PostDispatchProps {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +52,13 @@ const AdminPostsIndex: React.FC<PostsProps> = (props) => {
           <CircularProgress className={classes.progress} />
         </div>
       )}
+      {(props.maxPage > 1) && (
+        <ReactSimplePaginationComponent
+          page={props.page}
+          maxPage={props.maxPage}
+          onClickAction={(page: number) => props.fetchPosts(page, true)}
+        />
+      )}
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
@@ -68,7 +80,7 @@ const AdminPostsIndex: React.FC<PostsProps> = (props) => {
                   {post.Category}
                 </TableCell>
                 <TableCell align="center">
-                  <img src={post.ImageUrl} alt={post.ImageUrl} width={'100%'} />
+                  <img src={post.ImageUrl} alt={post.ImageUrl} width={'100px'} />
                 </TableCell>
                 <TableCell align="center">
                   {post.Title}

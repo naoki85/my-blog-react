@@ -14,6 +14,8 @@ export interface PostsState {
   Page: number;
   MaxPage: number;
   loading: boolean;
+  status?: AuthenticationStatus;
+  message?: string;
 }
 
 export interface RecommendedBooksStore {

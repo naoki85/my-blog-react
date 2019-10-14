@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Grid} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,6 +10,20 @@ import FormLabel from '@material-ui/core/FormLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {AnyAction, Dispatch} from "redux";
+import {StoreState} from "../../../types/state";
+import {Actions} from "../../../actions";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import {green, red} from "@material-ui/core/colors";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import IconButton from "@material-ui/core/IconButton";
+
+export interface CreatePostStateProps {
+  status?: "success" | "error";
+  message?: string;
+  loading: boolean;
+}
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -39,10 +53,80 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+  close: {
+    padding: theme.spacing(0.5),
+  },
+  success: {
+    backgroundColor: green[600],
+  },
+  error: {
+    backgroundColor: red[600],
+  }
 }));
 
-const AdminPostsNew: React.FC = () => {
+const AdminPostsNew: React.FC<CreatePostStateProps & { dispatch: Dispatch }> = (props) => {
   const classes = useStyles();
+  const [displaySnackBar, setDisplaySnackBar] = useState(false);
+  const [values, setValues] = React.useState({
+    title: '-',
+    content: '-',
+    category: '-',
+    publishedAt: '-',
+    imageUrl: '-',
+    active: 'published'
+  });
+  const onSnackbarClose = () => setDisplaySnackBar(false);
+
+  useEffect(() => {
+    if (props.status) {
+      setDisplaySnackBar(true);
+    }
+  }, [props]);
+
+  const submitNewPost = () => {
+    const dispatch = props.dispatch as (
+      thunk: (
+        dispatch: Dispatch<AnyAction>,
+        getState: () => StoreState
+      ) => Promise<void>
+    ) => void | Dispatch;
+    dispatch(Actions.createPost(values));
+  };
+
+  const selectedFile = (event: any) => {
+    event.persist();
+    const files = event.target.files;
+    setValues(oldValues => ({
+      ...oldValues,
+      imageUrl: files[0],
+    }));
+  };
+
+  const formatDatetime = (input: string): string => {
+    const splitDatetime = input.split('T');
+
+    return splitDatetime[0] + ' ' + splitDatetime[1] + ':00';
+  };
+
+  const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+    event.persist();
+    let value = event.target.value;
+    if (event.target.name === 'publishedAt') {
+      value = formatDatetime(event.target.value as string);
+    }
+    setValues(oldValues => ({
+      ...oldValues,
+      [event.target.name as string]: value,
+    }));
+  };
 
   return (
     <Container component="main">
@@ -51,7 +135,7 @@ const AdminPostsNew: React.FC = () => {
         <Typography component="h1" variant="h5">
           New Post
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -63,25 +147,27 @@ const AdminPostsNew: React.FC = () => {
                 id="title"
                 label="Title"
                 autoFocus
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
               <FormLabel component="legend">Image</FormLabel>
               <input
                 type="file"
+                name="imageUrl"
+                onChange={selectedFile}
                 className="inputFileBtnHide"
               />
             </Grid>
             <Grid item xs={12}>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-simple">Category</InputLabel>
+                <InputLabel htmlFor="category-native-simple">Category</InputLabel>
                 <Select
                   native
-                  // value={state.age}
-                  // onChange={handleChange('age')}
+                  onChange={handleChange}
                   inputProps={{
-                    name: 'age',
-                    id: 'age-native-simple',
+                    name: 'category',
+                    id: 'category-native-simple',
                   }}
                 >
                   <option value={"other"}>Other</option>
@@ -99,14 +185,25 @@ const AdminPostsNew: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="publishedAt"
+                label="publishedAt"
+                name="publishedAt"
+                type="datetime-local"
+                defaultValue="2019-10-01T08:00"
+                margin="normal"
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 id="Content"
                 label="Content"
+                name="content"
                 multiline
                 fullWidth
-                // rowsMax="4"
-                // value={values.multiline}
-                // onChange={handleChange('multiline')}
-                // className={classes.textField}
+                required
+                onChange={handleChange}
                 margin="normal"
                 variant="outlined"
               />
@@ -117,11 +214,43 @@ const AdminPostsNew: React.FC = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={submitNewPost}
           >
             Submit
           </Button>
+          {props.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
         </form>
       </div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={displaySnackBar}
+        autoHideDuration={6000}
+        onClose={onSnackbarClose}
+      >
+        <SnackbarContent
+          className={classes[props.status || 'success']}
+          aria-describedby="client-snackbar"
+          message={
+            <span id="client-snackbar">
+              {props.message}
+            </span>
+          }
+          action={[
+            <IconButton
+              key="close"
+              aria-label="close"
+              color="inherit"
+              className={classes.close}
+              onClick={onSnackbarClose}
+            >
+              ×
+            </IconButton>,
+          ]}
+        />
+      </Snackbar>
     </Container>
   );
 };

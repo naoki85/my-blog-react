@@ -109,7 +109,7 @@ interface CreatePostValue {
   content?: string;
   publishedAt?: string;
   category?: string;
-  imagUrl?: File;
+  imagUrl?: string;
 }
 
 const createPost = (values: CreatePostValue) => {

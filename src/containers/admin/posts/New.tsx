@@ -9,6 +9,8 @@ const mapStateToProps = function(state: StoreState) {
     status: state.posts.status,
     message: state.posts.message,
     loading: state.posts.loading,
+    filename: state.imageUpload.filename,
+    imageLoading: state.imageUpload.loading,
   }
 };
 

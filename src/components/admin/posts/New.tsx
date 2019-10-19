@@ -6,23 +6,26 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import FormLabel from '@material-ui/core/FormLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {AnyAction, Dispatch} from "redux";
 import {StoreState} from "../../../types/state";
 import {Actions} from "../../../actions";
+import {ImageUploadActions} from "../../../actions/imageUpload";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {green, red} from "@material-ui/core/colors";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import IconButton from "@material-ui/core/IconButton";
+import Dropzone from 'react-dropzone';
 
 export interface CreatePostStateProps {
   status?: "success" | "error";
   message?: string;
   loading: boolean;
+  filename: string;
+  imageLoading: boolean;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -69,7 +72,22 @@ const useStyles = makeStyles(theme => ({
   },
   error: {
     backgroundColor: red[600],
-  }
+  },
+  uploadArea: {
+    width: 400,
+    height: 200,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#666',
+    borderStyle: 'solid',
+    borderRadius: 5,
+    ":hover": {
+      opacity: 0.5,
+      backgroundColor: '#eee'
+    }
+  },
 }));
 
 const AdminPostsNew: React.FC<CreatePostStateProps & { dispatch: Dispatch }> = (props) => {
@@ -80,7 +98,6 @@ const AdminPostsNew: React.FC<CreatePostStateProps & { dispatch: Dispatch }> = (
     content: '-',
     category: '-',
     publishedAt: '-',
-    imageUrl: '-',
     active: 'published'
   });
   const onSnackbarClose = () => setDisplaySnackBar(false);
@@ -92,22 +109,29 @@ const AdminPostsNew: React.FC<CreatePostStateProps & { dispatch: Dispatch }> = (
   }, [props]);
 
   const submitNewPost = () => {
+    const createValue = {
+      ...values,
+      imageUrl: props.filename
+    };
+
     const dispatch = props.dispatch as (
       thunk: (
         dispatch: Dispatch<AnyAction>,
         getState: () => StoreState
       ) => Promise<void>
     ) => void | Dispatch;
-    dispatch(Actions.createPost(values));
+    dispatch(Actions.createPost(createValue));
   };
 
-  const selectedFile = (event: any) => {
-    event.persist();
-    const files = event.target.files;
-    setValues(oldValues => ({
-      ...oldValues,
-      imageUrl: files[0],
-    }));
+  const handleOnDrop = (files: File[]) => {
+    const dispatch = props.dispatch as (
+      thunk: (
+        dispatch: Dispatch<AnyAction>,
+        getState: () => StoreState
+      ) => Promise<void>
+    ) => void | Dispatch;
+    const target = files[0];
+    dispatch(ImageUploadActions.uploadImage(target));
   };
 
   const formatDatetime = (input: string): string => {
@@ -151,13 +175,25 @@ const AdminPostsNew: React.FC<CreatePostStateProps & { dispatch: Dispatch }> = (
               />
             </Grid>
             <Grid item xs={12}>
-              <FormLabel component="legend">Image</FormLabel>
-              <input
-                type="file"
-                name="imageUrl"
-                onChange={selectedFile}
-                className="inputFileBtnHide"
-              />
+              <Dropzone
+                onDrop={handleOnDrop}
+                accept="image/*"
+              >
+                {({getRootProps, getInputProps}) => (
+                  <section>
+                    <div {...getRootProps()} className={classes.uploadArea}>
+                      <input {...getInputProps()} />
+                      {props.imageLoading ?
+                        <p>Uploading ...</p> :
+                        <p>Drag 'n' drop some files here, or click to select files</p>
+                      }
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+              {props.imageLoading ?
+                <div>アップロード中です</div> :
+                <div>{props.filename}</div>}
             </Grid>
             <Grid item xs={12}>
               <FormControl className={classes.formControl}>

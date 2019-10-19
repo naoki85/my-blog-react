@@ -23,12 +23,19 @@ export interface RecommendedBooksStore {
   loading: boolean;
 }
 
+export interface ImageUploadState {
+  filename: string;
+  loading: boolean;
+  result: 'success' | 'error' | '';
+}
+
 export interface StoreState {
   type: string;
   dispatch: Dispatch;
   posts: PostsState;
   recommendedBooks: RecommendedBooksStore;
   auth: Auth;
+  imageUpload: ImageUploadState;
 }
 
 export interface Match {

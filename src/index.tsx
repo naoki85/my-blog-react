@@ -18,6 +18,7 @@ import ErrorsNotFound from './containers/errors/NotFound';
 import posts from "./reducers";
 import recommendedBooks from "./reducers/recommendedBooks";
 import auth from "./reducers/auth";
+import imageUpload from "./reducers/imageUpload";
 import { applyMiddleware, compose, createStore, StoreEnhancerStoreCreator, combineReducers } from "redux";
 import * as serviceWorker from './serviceWorker';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -42,7 +43,8 @@ const rootReducer = (history: History<{}>) => combineReducers({
   router: connectRouter(history),
   posts,
   recommendedBooks,
-  auth
+  auth,
+  imageUpload
 });
 
 const configureStore = (history: History<{}>) => {

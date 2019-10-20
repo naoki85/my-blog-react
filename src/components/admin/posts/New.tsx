@@ -96,7 +96,7 @@ const AdminPostsNew: React.FC<CreatePostStateProps & { dispatch: Dispatch }> = (
   const [values, setValues] = React.useState({
     title: '-',
     content: '-',
-    category: '-',
+    category: 'other',
     publishedAt: '-',
     active: 'published'
   });

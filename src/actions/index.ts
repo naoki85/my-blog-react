@@ -131,6 +131,7 @@ const createPost = (values: CreatePostValue) => {
         status: 'success',
         message: 'success to create post',
       }));
+      setTimeout(() => history.push('/admin/posts'), 2000);
     } catch (e) {
       if (e.response.status === 401) {
         // eslint-disable-next-line no-console

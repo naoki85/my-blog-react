@@ -15,6 +15,9 @@ export enum TypeKeys {
   CREATE_POST = 'CREATE_POST',
   CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS',
   CREATE_POST_FAIL = 'CREATE_POST_FAIL',
+  DELETE_POST = 'DELETE_POST',
+  DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS',
+  DELETE_POST_FAIL = 'DELETE_POST_FAIL',
 }
 
 const defaultRequestHeaders = {
@@ -31,6 +34,7 @@ interface FetchPostsResponse {
 const fetchPostsStart = () => createAction(TypeKeys.FETCH_POSTS, {});
 const fetchPostStart = () => createAction(TypeKeys.FETCH_POST, {});
 const createPostStart = () => createAction(TypeKeys.CREATE_POST, {});
+const deletePostStart = () => createAction(TypeKeys.DELETE_POST, {});
 
 const fetchPostsSuccess = (data: FetchPostsResponse) =>
   createAction(TypeKeys.FETCH_POSTS_SUCCESS, {
@@ -42,6 +46,8 @@ const fetchPostSuccess = (data: FetchPostsResponse) =>
   });
 const createPostSuccess = (data: { status: 'success' | 'error'; message: string }) =>
   createAction(TypeKeys.CREATE_POST_SUCCESS, { data });
+const deletePostSuccess = (data: { status: 'success' | 'error'; message: string }) =>
+  createAction(TypeKeys.DELETE_POST_SUCCESS, { data });
 
 const fetchPostsFail = (error: Error) =>
   createAction(TypeKeys.FETCH_POSTS_FAIL, { message: error.message });
@@ -49,6 +55,8 @@ const fetchPostFail = (error: Error) =>
   createAction(TypeKeys.FETCH_POST_FAIL, { message: error.message });
 const createPostFail = (data: { status: 'success' | 'error'; message: string }) =>
   createAction(TypeKeys.CREATE_POST_FAIL, { data });
+const deletePostFail = (data: { status: 'success' | 'error'; message: string }) =>
+  createAction(TypeKeys.DELETE_POST_FAIL, { data });
 
 const fetchPosts = (page: number, all: boolean) => {
   return async (dispatch: Dispatch<AnyAction>) => {
@@ -145,13 +153,44 @@ const createPost = (values: CreatePostValue) => {
   };
 };
 
+const deletePost = (id: number) => {
+  return async (dispatch: Dispatch<AnyAction>) => {
+    dispatch(deletePostStart());
+    const token = localStorage.getItem(localStorageItemName);
+    let mergedHeader = Object.assign({}, defaultRequestHeaders);
+    mergedHeader = Object.assign(mergedHeader, {
+      Authorization: 'Bearer ' + token,
+    });
+
+    try {
+      await axios.delete(`${apiURL}/posts/${id}`,
+        { headers: mergedHeader });
+      dispatch(deletePostSuccess({
+        status: 'success',
+        message: 'success to delete post',
+      }));
+    } catch (e) {
+      if (e.response.status === 401) {
+        // eslint-disable-next-line no-console
+        console.log('logout action');
+        localStorage.setItem(localStorageItemName, '');
+        history.push('/admin/login');
+      } else {
+        dispatch(deletePostFail(e));
+      }
+    }
+  };
+};
+
 export const DispatchActions = {
   fetchPostsSuccess,
   fetchPostsFail,
   fetchPostSuccess,
+  deletePostSuccess,
   fetchPostFail,
   createPostSuccess,
   createPostFail,
+  deletePostFail,
   fetchPostsStart,
   fetchPostStart,
   createPostStart,
@@ -161,5 +200,6 @@ export const Actions = {
   fetchPosts,
   fetchPost,
   createPost,
+  deletePost,
 };
 export type Actions = ActionsUnion<typeof DispatchActions>;

@@ -19,6 +19,8 @@ export default (state = initialState, action: Actions) => {
     case TypeKeys.FETCH_POST_SUCCESS: {
       return { ...action.payload.data, loading: false };
     }
+    case TypeKeys.DELETE_POST_SUCCESS:
+    case TypeKeys.DELETE_POST_FAIL:
     case TypeKeys.CREATE_POST_SUCCESS:
     case TypeKeys.CREATE_POST_FAIL: {
       return { ...state, ...action.payload.data, loading: false };

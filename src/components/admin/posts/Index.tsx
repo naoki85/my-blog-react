@@ -1,5 +1,5 @@
 import React from 'react';
-import { Post } from "../../../types/state";
+import {Post, StoreState} from "../../../types/state";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -11,6 +11,11 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import ReactSimplePaginationComponent from '@naoki85/react-simple-pagination-component';
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
+import red from '@material-ui/core/colors/red';
+import amber from '@material-ui/core/colors/amber';
+import {AnyAction, Dispatch} from "redux";
+import {Actions} from "../../../actions";
+import AdminSnackbar, {AdminSnackbarProps} from "../Snackbar";
 
 interface PostStateProps {
   posts: Post[];
@@ -23,7 +28,7 @@ export interface PostDispatchProps {
   fetchPosts: (page: number, all: boolean) => void;
 }
 
-export interface PostsProps extends PostStateProps, PostDispatchProps {}
+export interface PostsProps extends PostStateProps, PostDispatchProps, AdminSnackbarProps {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,11 +52,31 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonLink: {
       textDecoration: "none"
     },
+    buttonWarning: {
+      backgroundColor: amber['A400'],
+      color: 'white',
+    },
+    buttonAlert: {
+      backgroundColor: red['A400'],
+      color: 'white',
+    },
   }),
 );
 
-const AdminPostsIndex: React.FC<PostsProps> = (props) => {
+const AdminPostsIndex: React.FC<PostsProps & { dispatch: Dispatch }> = (props) => {
   const classes = useStyles();
+
+  const deletePost = (id: number) => {
+    const ret = window.confirm('Delete Post?');
+    if (!ret) { return }
+    const dispatch = props.dispatch as (
+      thunk: (
+        dispatch: Dispatch<AnyAction>,
+        getState: () => StoreState
+      ) => Promise<void>
+    ) => void | Dispatch;
+    dispatch(Actions.deletePost(id));
+  };
 
   return (
     <>
@@ -102,14 +127,31 @@ const AdminPostsIndex: React.FC<PostsProps> = (props) => {
                 <TableCell align="center">
                   {post.Title}
                 </TableCell>
-                <TableCell align="center"></TableCell>
+                <TableCell align="center">
+                  <Link to={'/admin/posts/edit/' + post.Id} className={classes.buttonLink}>
+                    <Button
+                      className={classes.buttonWrapper + ' ' + classes.buttonAlert}
+                      variant="contained"
+                    >
+                      Edit
+                    </Button>
+                  </Link>
+                  <Button
+                    className={classes.buttonWrapper + ' ' + classes.buttonAlert}
+                    variant="contained"
+                    onClick={() => deletePost(post.Id)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </Paper>
+      <AdminSnackbar message={props.message} status={props.status} />
     </>
   );
-}
+};
 
 export default AdminPostsIndex;

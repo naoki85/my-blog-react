@@ -5,9 +5,9 @@ import {Dispatch} from "redux";
 import AdminPostsForm, {AdminPostsFormStateProps} from "./Form";
 import AdminSnackbar, {AdminSnackbarProps} from "../Snackbar";
 
-export interface AdminPostsNewProps extends AdminPostsFormStateProps, AdminSnackbarProps {}
+export interface AdminPostsEditProps extends AdminPostsFormStateProps, AdminSnackbarProps {}
 
-const AdminPostsNew: React.FC<AdminPostsNewProps & { dispatch: Dispatch }> = (props) => {
+const AdminPostsEdit: React.FC<AdminPostsEditProps & { dispatch: Dispatch }> = (props) => {
   return (
     <Container component="main">
       <CssBaseline />
@@ -23,4 +23,4 @@ const AdminPostsNew: React.FC<AdminPostsNewProps & { dispatch: Dispatch }> = (pr
   );
 };
 
-export default AdminPostsNew;
+export default AdminPostsEdit;

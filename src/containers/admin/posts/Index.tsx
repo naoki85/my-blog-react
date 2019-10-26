@@ -1,7 +1,7 @@
 import React from "react";
 import { Dispatch, Action, AnyAction } from "redux";
 import { connect } from "react-redux";
-import { Actions } from "../../../actions/index";
+import { Actions } from "../../../actions";
 import { StoreState } from "../../../types/state";
 import AdminPostsIndexComponent, { PostsProps, PostDispatchProps  } from '../../../components/admin/posts/Index';
 
@@ -10,7 +10,9 @@ const mapStateToProps = function(state: StoreState) {
     posts: state.posts.Posts,
     page: state.posts.Page,
     maxPage: state.posts.MaxPage,
-    loading: state.posts.loading
+    loading: state.posts.loading,
+    status: state.posts.status,
+    message: state.posts.message,
   }
 };
 

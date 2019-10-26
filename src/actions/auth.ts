@@ -50,7 +50,7 @@ const tryLogin = (email: string, password: string) => {
           Message: 'Login succeed.',
         })
       );
-      history.push('/admin/posts');
+      setTimeout(() => history.push('/admin/posts'), 2000);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e.message);

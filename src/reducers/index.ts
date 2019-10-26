@@ -12,6 +12,7 @@ export default (state = initialState, action: Actions) => {
   switch (action.type) {
     case TypeKeys.FETCH_POSTS:
     case TypeKeys.CREATE_POST:
+    case TypeKeys.UPDATE_POST:
     case TypeKeys.FETCH_POST: {
       return { ...state, loading: true }
     }
@@ -19,8 +20,12 @@ export default (state = initialState, action: Actions) => {
     case TypeKeys.FETCH_POST_SUCCESS: {
       return { ...action.payload.data, loading: false };
     }
+    case TypeKeys.DELETE_POST_SUCCESS:
+    case TypeKeys.DELETE_POST_FAIL:
     case TypeKeys.CREATE_POST_SUCCESS:
-    case TypeKeys.CREATE_POST_FAIL: {
+    case TypeKeys.CREATE_POST_FAIL:
+    case TypeKeys.UPDATE_POST_SUCCESS:
+    case TypeKeys.UPDATE_POST_FAIL: {
       return { ...state, ...action.payload.data, loading: false };
     }
     default: {

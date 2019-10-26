@@ -12,6 +12,7 @@ import ReactSimplePaginationComponent from '@naoki85/react-simple-pagination-com
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
 import red from '@material-ui/core/colors/red';
+import amber from '@material-ui/core/colors/amber';
 import {AnyAction, Dispatch} from "redux";
 import {Actions} from "../../../actions";
 import AdminSnackbar, {AdminSnackbarProps} from "../Snackbar";
@@ -50,6 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     buttonLink: {
       textDecoration: "none"
+    },
+    buttonWarning: {
+      backgroundColor: amber['A400'],
+      color: 'white',
     },
     buttonAlert: {
       backgroundColor: red['A400'],
@@ -123,6 +128,14 @@ const AdminPostsIndex: React.FC<PostsProps & { dispatch: Dispatch }> = (props) =
                   {post.Title}
                 </TableCell>
                 <TableCell align="center">
+                  <Link to={'/admin/posts/edit/' + post.Id} className={classes.buttonLink}>
+                    <Button
+                      className={classes.buttonWrapper + ' ' + classes.buttonAlert}
+                      variant="contained"
+                    >
+                      Edit
+                    </Button>
+                  </Link>
                   <Button
                     className={classes.buttonWrapper + ' ' + classes.buttonAlert}
                     variant="contained"

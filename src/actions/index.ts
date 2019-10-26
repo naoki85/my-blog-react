@@ -15,6 +15,9 @@ export enum TypeKeys {
   CREATE_POST = 'CREATE_POST',
   CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS',
   CREATE_POST_FAIL = 'CREATE_POST_FAIL',
+  UPDATE_POST = 'UPDATE_POST',
+  UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS',
+  UPDATE_POST_FAIL = 'UPDATE_POST_FAIL',
   DELETE_POST = 'DELETE_POST',
   DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS',
   DELETE_POST_FAIL = 'DELETE_POST_FAIL',
@@ -34,6 +37,7 @@ interface FetchPostsResponse {
 const fetchPostsStart = () => createAction(TypeKeys.FETCH_POSTS, {});
 const fetchPostStart = () => createAction(TypeKeys.FETCH_POST, {});
 const createPostStart = () => createAction(TypeKeys.CREATE_POST, {});
+const updatePostStart = () => createAction(TypeKeys.UPDATE_POST, {});
 const deletePostStart = () => createAction(TypeKeys.DELETE_POST, {});
 
 const fetchPostsSuccess = (data: FetchPostsResponse) =>
@@ -46,6 +50,8 @@ const fetchPostSuccess = (data: FetchPostsResponse) =>
   });
 const createPostSuccess = (data: { status: 'success' | 'error'; message: string }) =>
   createAction(TypeKeys.CREATE_POST_SUCCESS, { data });
+const updatePostSuccess = (data: { status: 'success' | 'error'; message: string }) =>
+  createAction(TypeKeys.UPDATE_POST_SUCCESS, { data });
 const deletePostSuccess = (data: { status: 'success' | 'error'; message: string }) =>
   createAction(TypeKeys.DELETE_POST_SUCCESS, { data });
 
@@ -55,6 +61,8 @@ const fetchPostFail = (error: Error) =>
   createAction(TypeKeys.FETCH_POST_FAIL, { message: error.message });
 const createPostFail = (data: { status: 'success' | 'error'; message: string }) =>
   createAction(TypeKeys.CREATE_POST_FAIL, { data });
+const updatePostFail = (data: { status: 'success' | 'error'; message: string }) =>
+  createAction(TypeKeys.UPDATE_POST_FAIL, { data });
 const deletePostFail = (data: { status: 'success' | 'error'; message: string }) =>
   createAction(TypeKeys.DELETE_POST_FAIL, { data });
 
@@ -153,6 +161,39 @@ const createPost = (values: CreatePostValue) => {
   };
 };
 
+const updatePost = (id: number, values: CreatePostValue) => {
+  return async (dispatch: Dispatch<AnyAction>) => {
+    dispatch(updatePostStart());
+    let mergedBody = Object.assign({}, defaultRequestBody);
+    mergedBody = Object.assign(mergedBody, values);
+    const token = localStorage.getItem(localStorageItemName);
+    let mergedHeader = Object.assign({}, defaultRequestHeaders);
+    mergedHeader = Object.assign(mergedHeader, {
+      Authorization: 'Bearer ' + token,
+    });
+
+    try {
+      await axios.put(`${apiURL}/posts/${id}`,
+        JSON.stringify(mergedBody),
+        { headers: mergedHeader });
+      dispatch(updatePostSuccess({
+        status: 'success',
+        message: 'success to create post',
+      }));
+      setTimeout(() => history.push('/admin/posts'), 2000);
+    } catch (e) {
+      if (e.response.status === 401) {
+        // eslint-disable-next-line no-console
+        console.log('logout action');
+        localStorage.setItem(localStorageItemName, '');
+        history.push('/admin/login');
+      } else {
+        dispatch(updatePostFail(e));
+      }
+    }
+  };
+};
+
 const deletePost = (id: number) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(deletePostStart());
@@ -188,18 +229,22 @@ export const DispatchActions = {
   fetchPostSuccess,
   deletePostSuccess,
   fetchPostFail,
+  createPostStart,
   createPostSuccess,
   createPostFail,
+  updatePostStart,
+  updatePostSuccess,
+  updatePostFail,
   deletePostFail,
   fetchPostsStart,
   fetchPostStart,
-  createPostStart,
 };
 export const Actions = {
   ...DispatchActions,
   fetchPosts,
   fetchPost,
   createPost,
+  updatePost,
   deletePost,
 };
 export type Actions = ActionsUnion<typeof DispatchActions>;

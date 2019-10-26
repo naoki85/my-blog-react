@@ -90,6 +90,11 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
       ...values,
       imageUrl: props.filename
     };
+    if (createValue.imageUrl.length <= 1 && props.post.ImageUrl.length > 1) {
+      createValue.imageUrl = props.post.ImageUrl;
+    } else if (createValue.imageUrl.length <= 1) {
+      createValue.imageUrl = "-";
+    }
 
     const dispatch = props.dispatch as (
       thunk: (
@@ -97,7 +102,11 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
         getState: () => StoreState
       ) => Promise<void>
     ) => void | Dispatch;
-    dispatch(Actions.createPost(createValue));
+    if (props.post.Id === 0) {
+      dispatch(Actions.createPost(createValue));
+    } else {
+      dispatch(Actions.updatePost(props.post.Id, createValue));
+    }
   };
 
   const handleOnDrop = (files: File[]) => {
@@ -147,6 +156,7 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
                 id="title"
                 label="Title"
                 autoFocus
+                value={values.title}
                 onChange={handleChange}
               />
             </Grid>
@@ -181,6 +191,7 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
                     name: 'category',
                     id: 'category-native-simple',
                   }}
+                  value={values.category}
                 >
                   <option value={"other"}>Other</option>
                   <option value={"vuejs"}>Vue / Nuxt</option>
@@ -218,6 +229,7 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
                 onChange={handleChange}
                 margin="normal"
                 variant="outlined"
+                value={values.content}
               />
             </Grid>
           </Grid>

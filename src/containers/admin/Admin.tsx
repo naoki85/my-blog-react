@@ -19,7 +19,7 @@ export default function withAuth(AuthComponent: any) {
         return (
           <>
             <CustomizedMenus />
-            <AuthComponent history={this.props.history} />
+            <AuthComponent {...this.props} />
           </>
         )
       } else {

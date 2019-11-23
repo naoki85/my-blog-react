@@ -4,7 +4,7 @@
   }
 
   h1, h2 {
-    border-bottom: groove 1px #4db6ac;
+//     border-bottom: groove 1px #4db6ac;
     font-weight:400;
     letter-spacing: normal !important;
     margin-bottom: 20px;
@@ -49,91 +49,6 @@
       &::before {
         content: '';
         letter-spacing: 0;
-      }
-
-      span.hljs-comment {
-        color: #9e9e9e;
-      }
-
-      span.hljs-string {
-        color: #4caf50;
-      }
-      
-      span.hljs-keyword {
-        color: #e65100;
-      }
-      
-      span.hljs-attr {
-        color: #f50057;
-      }
-    }
-    
-    code.javascript, code.js {
-      span.hljs-keyword {
-        color: #e65100;
-      }
-      
-      span.hljs-attr {
-        color: #f50057;
-      }
-      
-      span.hljs-string {
-        color: #4caf50;
-      }
-    }
-    
-    code.html {
-      span.hljs-string {
-        color: #4caf50;
-      }
-    }
-    
-    code.css {
-      span.hljs-selector-class {
-        color: #ffab00;
-      }
-      
-      span.hljs-attribute {
-        color: #f50057;
-      }
-    }
-
-    code.ruby, code.rb {
-      span.hljs-keyword {
-        color: #dd2c00;
-      }
-
-      span.hljs-function {
-        span.hljs-keyword {
-          color: #dd2c00;
-        }
-
-        span.hljs-title {
-          color: #ffab00;
-        }
-      }
-
-      span.hljs-symbol {
-        color: #00b0ff;
-      }
-
-      span.hljs-number {
-        color: #558b2f;
-      }
-    }
-
-    code.sh, code.shell {
-      background: black;
-      color: white;
-    }
-
-    code.yml {
-      span.hljs-attr {
-        color: #dd2c00;
-      }
-
-      span.hljs-string {
-        color: black;
       }
     }
   }

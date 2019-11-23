@@ -14,6 +14,9 @@ import {ImageUploadActions} from "../../../actions/imageUpload";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {green} from "@material-ui/core/colors";
 import Dropzone from 'react-dropzone';
+import {convertToHtml} from "../../../utils/Markdown";
+import '../../../styles/markdown.scss';
+import 'highlight.js/styles/monokai.css';
 
 export interface AdminPostsFormStateProps {
   loading: boolean;
@@ -218,7 +221,7 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <TextField
                 id="Content"
                 label="Content"
@@ -230,6 +233,13 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
                 margin="normal"
                 variant="outlined"
                 value={values.content}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography
+                paragraph
+                className={'preview-area'}
+                dangerouslySetInnerHTML={{__html: convertToHtml(values.content)}}
               />
             </Grid>
           </Grid>

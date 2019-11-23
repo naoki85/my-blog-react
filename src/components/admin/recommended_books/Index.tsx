@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(3),
       overflowX: 'auto',
     },
+    buttonWrapper: {
+      margin: theme.spacing(3),
+    },
     table: {
       minWidth: 650,
     },
@@ -75,7 +78,7 @@ const getModalStyle = () => {
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
   };
-}
+};
 
 const AdminRecommendedBooksIndex: React.FC<RecommendedBooksProps & { dispatch: Dispatch }> = (props) => {
   const classes = useStyles();
@@ -107,6 +110,7 @@ const AdminRecommendedBooksIndex: React.FC<RecommendedBooksProps & { dispatch: D
   return (
     <>
       <Button
+        className={classes.buttonWrapper}
         aria-controls="customized-menu"
         aria-haspopup="true"
         variant="contained"
@@ -183,9 +187,9 @@ const AdminRecommendedBooksIndex: React.FC<RecommendedBooksProps & { dispatch: D
                   {book.Id}
                 </TableCell>
                 <TableCell align="center">
-                  <img src={book.ImageUrl} alt={book.ImageUrl} width={'100%'} />
+                  <img src={book.ImageUrl} alt={book.ImageUrl} width={'100px'} />
                 </TableCell>
-                <TableCell align="center"></TableCell>
+                <TableCell align="center" />
               </TableRow>
             ))}
           </TableBody>
@@ -193,6 +197,6 @@ const AdminRecommendedBooksIndex: React.FC<RecommendedBooksProps & { dispatch: D
       </Paper>
     </>
   );
-}
+};
 
 export default AdminRecommendedBooksIndex;

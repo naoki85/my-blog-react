@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ActionsUnion, createAction } from './types';
 import { Dispatch, AnyAction } from 'redux';
-import { apiURL, localStorageItemName } from '../config/const';
+import {apiURL, imageBaseUrl, localStorageItemName} from '../config/const';
 import {history} from "../index";
 import { ImageUploadState } from '../types/state';
 
@@ -49,10 +49,11 @@ const uploadImage = (file: File) => {
       await axios.put(response.data.Url,
         file,
         { headers: {'Content-Type': file.type} });
+      const imageUrl = imageBaseUrl + '/' + newFilename;
       dispatch(uploadImageSuccess({
         result: 'success',
         loading: false,
-        filename: newFilename,
+        filename: imageUrl,
       }));
     } catch (e) {
       if (e.response.status === 401) {

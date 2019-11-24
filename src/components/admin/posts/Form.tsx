@@ -17,6 +17,7 @@ import Dropzone from 'react-dropzone';
 import {convertToHtml} from "../../../utils/Markdown";
 import '../../../styles/markdown.scss';
 import 'highlight.js/styles/monokai.css';
+import {FormatDatetime} from "../../../utils/Time";
 
 export interface AdminPostsFormStateProps {
   loading: boolean;
@@ -84,20 +85,15 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
     title: props.post.Title,
     content: props.post.Content,
     category: props.post.Category,
+    imageUrl: props.post.ImageUrl,
     publishedAt: props.post.PublishedAt,
     active: 'published'
   });
 
   const submitNewPost = () => {
     const createValue = {
-      ...values,
-      imageUrl: props.filename
+      ...values
     };
-    if (createValue.imageUrl.length <= 1 && props.post.ImageUrl.length > 1) {
-      createValue.imageUrl = props.post.ImageUrl;
-    } else if (createValue.imageUrl.length <= 1) {
-      createValue.imageUrl = "-";
-    }
 
     const dispatch = props.dispatch as (
       thunk: (
@@ -123,17 +119,11 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
     dispatch(ImageUploadActions.uploadImage(target));
   };
 
-  const formatDatetime = (input: string): string => {
-    const splitDatetime = input.split('T');
-
-    return splitDatetime[0] + ' ' + splitDatetime[1] + ':00';
-  };
-
   const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     event.persist();
     let value = event.target.value;
     if (event.target.name === 'publishedAt') {
-      value = formatDatetime(event.target.value as string);
+      value = FormatDatetime(event.target.value as string);
     }
     setValues(oldValues => ({
       ...oldValues,
@@ -160,6 +150,20 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
                 label="Title"
                 autoFocus
                 value={values.title}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="fname"
+                name="imageUrl"
+                variant="outlined"
+                required
+                fullWidth
+                id="imageUrl"
+                label="imageUrl"
+                autoFocus
+                value={values.imageUrl}
                 onChange={handleChange}
               />
             </Grid>

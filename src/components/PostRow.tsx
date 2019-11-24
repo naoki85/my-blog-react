@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
+import {ParseDate} from "../utils/Time";
 
 export interface Post {
   Id: number;
@@ -50,7 +51,7 @@ const PostRow: FC<PostRowProps> = (props: PostRowProps) => {
                 {props.post.Title}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {props.post.PublishedAt}
+                {ParseDate(props.post.PublishedAt)}
               </Typography>
             </CardContent>
           </div>

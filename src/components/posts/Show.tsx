@@ -8,6 +8,7 @@ import TweetButton from './TweetButton';
 import HatebuButton from './HatebuButton'
 import RecommendedBooksComponent, {RecommendedBooksProps} from './RecommendedBooks';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {ParseDate} from "../../utils/Time";
 
 export interface Post {
   Id: number;
@@ -69,7 +70,7 @@ const PostShowComponent: FC<PostProps> = (props) => {
           {props.post.Title}
         </Typography>
         <Typography variant="subtitle1" color="textSecondary">
-          {props.post.PublishedAt}
+          {ParseDate(props.post.PublishedAt)}
         </Typography>
         <TweetButton
           id={props.post.Id}

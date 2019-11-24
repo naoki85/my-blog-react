@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import {createStyles, makeStyles, Theme} from "@material-ui/core";
+import {createStyles, makeStyles} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
@@ -16,7 +16,7 @@ interface RecommendedBooksStateProps {
 
 export interface RecommendedBooksProps extends RecommendedBooksStateProps {}
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -53,7 +53,7 @@ const RecommendedBooksComponent: FC<RecommendedBooksProps> = (props) => {
                     />
                   </Grid>
                 )
-              })};
+              })}
             </Grid>
           </Grid>
         </Grid>

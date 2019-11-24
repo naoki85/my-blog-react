@@ -10,10 +10,9 @@ import Select from '@material-ui/core/Select';
 import {AnyAction, Dispatch} from "redux";
 import {StoreState, Post} from "../../../types/state";
 import {Actions} from "../../../actions";
-import {ImageUploadActions} from "../../../actions/imageUpload";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import ImageUploadModal from "./ImageUploadModal";
 import {green} from "@material-ui/core/colors";
-import Dropzone from 'react-dropzone';
 import {convertToHtml} from "../../../utils/Markdown";
 import '../../../styles/markdown.scss';
 import 'highlight.js/styles/monokai.css';
@@ -62,25 +61,14 @@ const useStyles = makeStyles(theme => ({
     marginTop: -12,
     marginLeft: -12,
   },
-  uploadArea: {
-    width: 400,
-    height: 200,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#666',
-    borderStyle: 'solid',
-    borderRadius: 5,
-    ":hover": {
-      opacity: 0.5,
-      backgroundColor: '#eee'
-    }
+  buttonWrapper: {
+    margin: theme.spacing(3),
   },
 }));
 
 const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }> = (props) => {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
   const [values, setValues] = useState({
     title: props.post.Title,
     content: props.post.Content,
@@ -108,17 +96,6 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
     }
   };
 
-  const handleOnDrop = (files: File[]) => {
-    const dispatch = props.dispatch as (
-      thunk: (
-        dispatch: Dispatch<AnyAction>,
-        getState: () => StoreState
-      ) => Promise<void>
-    ) => void | Dispatch;
-    const target = files[0];
-    dispatch(ImageUploadActions.uploadImage(target));
-  };
-
   const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     event.persist();
     let value = event.target.value;
@@ -131,12 +108,30 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
     }));
   };
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           New Post
         </Typography>
+        <Button
+          className={classes.buttonWrapper}
+          aria-controls="customized-menu"
+          aria-haspopup="true"
+          variant="contained"
+          color="primary"
+          onClick={handleOpen}
+        >
+          Open image upload modal
+        </Button>
         <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -166,27 +161,6 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
                 value={values.imageUrl}
                 onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <Dropzone
-                onDrop={handleOnDrop}
-                accept="image/*"
-              >
-                {({getRootProps, getInputProps}) => (
-                  <section>
-                    <div {...getRootProps()} className={classes.uploadArea}>
-                      <input {...getInputProps()} />
-                      {props.imageLoading ?
-                        <p>Uploading ...</p> :
-                        <p>Drag 'n' drop some files here, or click to select files</p>
-                      }
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
-              {props.imageLoading ?
-                <div>アップロード中です</div> :
-                <div>{props.filename}</div>}
             </Grid>
             <Grid item xs={12}>
               <FormControl className={classes.formControl}>
@@ -259,6 +233,13 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
           {props.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
         </form>
       </div>
+      <ImageUploadModal
+        filename={props.filename}
+        imageLoading={props.imageLoading}
+        modalOpen={open}
+        onCloseHandler={handleClose}
+        dispatch={props.dispatch}
+      />
     </>
   );
 };

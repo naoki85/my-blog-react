@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ReactSimplePaginationComponent from '@naoki85/react-simple-pagination-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ScrollToTopOnMount from "./ScrollToTop";
 
 export interface AppStateProps {
   posts: Post[];
@@ -37,6 +38,8 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
 
   return (
     <>
+      <ScrollToTopOnMount />
+
       {(props.loading) && (
         <div className={classes.progressArea}>
           <CircularProgress className={classes.progress} />

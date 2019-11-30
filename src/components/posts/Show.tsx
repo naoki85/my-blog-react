@@ -8,6 +8,7 @@ import TweetButton from './TweetButton';
 import HatebuButton from './HatebuButton'
 import RecommendedBooksComponent, {RecommendedBooksProps} from './RecommendedBooks';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import ScrollToTopOnMount from "../ScrollToTop";
 import {ParseDate} from "../../utils/Time";
 
 export interface Post {
@@ -59,6 +60,8 @@ const PostShowComponent: FC<PostProps> = (props) => {
         <meta name={'twitter:card'} content={'summary'} />
         <title>{props.post.Title}</title>
       </Helmet>
+
+      <ScrollToTopOnMount />
 
       {(props.loading) && (
         <div className={classes.progressArea}>

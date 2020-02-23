@@ -40,7 +40,7 @@ const RecommendedBooksComponent: FC<RecommendedBooksProps> = (props) => {
               {props.recommendedBooks.map(book => {
                 return (
                   <Grid key={book.Id} item xs={3}>
-                    <a target={'_blank'} href={book.Link} rel={'noopener noreferrer'}>
+                    <a target={'_blank'} href={book.Link} rel="noreferrer noopener">
                       <img
                         src={book.ImageUrl}
                         alt={''}

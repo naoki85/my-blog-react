@@ -19,7 +19,7 @@ const HatebuButton: FC<HatebuButtonStateProps> = (props: HatebuButtonStateProps)
       className={'btn-container'}
       href={getLinkHref()}
       target={'_blank'}
-      rel={'noopener noreferrer'}
+      rel="noreferrer noopener"
     >
       <button className={'btn-hatebu'}>
         ブックマーク

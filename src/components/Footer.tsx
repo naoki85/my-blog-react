@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import clsx from 'clsx';
-// @ts-ignore
 import { loadCSS } from 'fg-loadcss';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -52,7 +51,7 @@ const Footer: FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <a href={'https://twitter.com/naoki85_201612'} target={'_blank'} rel={'noopener noreferrer'}>
+              <a href={'https://twitter.com/naoki85_201612'} target={'_blank'} rel="noreferrer noopener">
                 <Icon className={clsx(classes.icon, 'fab fa-twitter')} color="action" />
               </a>
             </Grid>

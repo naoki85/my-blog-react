@@ -85,7 +85,7 @@
     "gulp-awspublish": "^4.0.0",
     "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
     "jest-enzyme": "^7.1.0",
-    "json-server": "^0.15.0",
+    "json-server": "^0.16.1",
     "prettier": "^1.18.2",
     "prettier-stylelint": "^0.4.2",
     "stylelint-config-prettier": "^5.2.0",

@@ -40,7 +40,7 @@ history.listen(({ pathname }) => {
   ReactGA.pageview(pathname);
 });
 
-const rootReducer = (history: History<{}>) => combineReducers({
+const rootReducer = (history: History<{} | null | undefined>) => combineReducers({
   router: connectRouter(history),
   posts,
   recommendedBooks,
@@ -48,7 +48,7 @@ const rootReducer = (history: History<{}>) => combineReducers({
   imageUpload
 });
 
-const configureStore = (history: History<{}>) => {
+const configureStore = (history: History<{} | null | undefined>) => {
   return createStore(rootReducer(history), compose(
     applyMiddleware(routerMiddleware(history), thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__

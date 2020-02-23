@@ -7,8 +7,8 @@ import {routerMiddleware, connectRouter, ConnectedRouter} from 'connected-react-
 import { History, createBrowserHistory } from 'history';
 import App from './containers/App';
 import PostShow from './containers/posts/Show';
-import Footer from './containers/Footer';
-import Navbar from './containers/Navbar';
+import Footer from './components/organisms/Footer';
+import Navbar from './components/organisms/Navbar';
 import WithAuth from "./containers/admin/Admin";
 import adminLogin from "./containers/admin/Login";
 import adminPostsIndex from "./containers/admin/posts/Index";
@@ -58,26 +58,35 @@ const configureStore = (history: History<{} | null | undefined>) => {
 };
 const store = configureStore(history);
 
+const classRoot = {
+  display: 'flex',
+};
+const classMain = {
+  marginTop: '70px',
+};
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <CssBaseline />
-        <Navbar />
-        <Container maxWidth="lg">
-          <Switch>
-            <Route path={'/posts/:id'} component={PostShow} />
-            <Route exact={true} path={'/not_found'} component={ErrorsNotFound} />
-            <Route exact={true} path={'/admin/login'} component={adminLogin} />
-            <Route exact={true} path={'/admin/posts/new'} component={WithAuth(adminPostsNew)} />
-            <Route path={'/admin/posts/edit/:id'} component={WithAuth(adminPostsEdit)} />
-            <Route exact={true} path={'/admin/posts'} component={WithAuth(adminPostsIndex)} />
-            <Route exact={true} path={'/admin/recommended_books'} component={WithAuth(adminRecommendedBooksIndex)} />
-            <Route exact={true} path={'/'} component={App} />
-            <Redirect to={'/not_found'} />
-          </Switch>
-        </Container>
-        <Footer />
+        <div style={classRoot}>
+          <CssBaseline />
+          <Navbar />
+          <Container maxWidth="lg" style={classMain}>
+            <Switch>
+              <Route path={'/posts/:id'} component={PostShow} />
+              <Route exact={true} path={'/not_found'} component={ErrorsNotFound} />
+              <Route exact={true} path={'/admin/login'} component={adminLogin} />
+              <Route exact={true} path={'/admin/posts/new'} component={WithAuth(adminPostsNew)} />
+              <Route path={'/admin/posts/edit/:id'} component={WithAuth(adminPostsEdit)} />
+              <Route exact={true} path={'/admin/posts'} component={WithAuth(adminPostsIndex)} />
+              <Route exact={true} path={'/admin/recommended_books'} component={WithAuth(adminRecommendedBooksIndex)} />
+              <Route exact={true} path={'/'} component={App} />
+              <Redirect to={'/not_found'} />
+            </Switch>
+            <Footer />
+          </Container>
+        </div>
       </ConnectedRouter>
     </Provider>
   </ThemeProvider>,

@@ -2,7 +2,6 @@ import React from "react";
 import {Dispatch} from 'redux';
 import { RouteComponentProps } from 'react-router';
 import { localStorageItemName } from '../../config/const';
-import CustomizedMenus from '../../components/admin/Menu';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function withAuth(AuthComponent: any) {
@@ -18,7 +17,6 @@ export default function withAuth(AuthComponent: any) {
       if (localStorage.getItem(localStorageItemName)) {
         return (
           <>
-            <CustomizedMenus />
             <AuthComponent {...this.props} />
           </>
         )

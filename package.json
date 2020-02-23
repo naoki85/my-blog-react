@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.2.0",
+    "@material-ui/icons": "^4.9.1",
     "@naoki85/react-simple-pagination-component": "^0.2.3",
     "@types/axios": "^0.14.0",
     "@types/highlight.js": "^9.12.3",

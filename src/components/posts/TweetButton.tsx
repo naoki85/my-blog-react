@@ -19,7 +19,7 @@ const TweetButton: FC<TweetButtonStateProps> = (props: TweetButtonStateProps) =>
       className={'btn-container'}
       href={getLinkHref()}
       target={'_blank'}
-      rel={'noopener noreferrer'}
+      rel="noreferrer noopener"
     >
       <button className={'btn-twitter'}>
         Tweet

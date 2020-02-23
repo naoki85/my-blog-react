@@ -2,7 +2,6 @@ import axios from 'axios';
 import {Auth} from '../types/state';
 import {ActionsUnion, createAction} from './types';
 import {Dispatch, AnyAction} from 'redux';
-import {history} from '../index';
 import {apiURL, localStorageItemName} from '../config/const';
 
 export enum TypeKeys {
@@ -50,7 +49,7 @@ const tryLogin = (email: string, password: string) => {
           Message: 'Login succeed.',
         })
       );
-      setTimeout(() => history.push('/admin/posts'), 2000);
+      setTimeout(() => window.location.href = '/admin/posts', 2000);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e.message);
@@ -83,7 +82,7 @@ const tryLogout = () => {
       console.log(e.message);
     } finally {
       localStorage.setItem(localStorageItemName, '');
-      history.push('/admin/login');
+      window.location.href = '/admin/login';
     }
   };
 };

@@ -21,10 +21,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import {localStorageItemName} from "../../config/const";
-import {Action, AnyAction, Dispatch} from "redux";
-import {StoreState} from "../../types/state";
-import {AuthActions} from "../../actions/auth";
-import {connect} from "react-redux";
+import {User} from "../../models/user";
 
 const drawerWidth = 240;
 
@@ -75,10 +72,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
+    width: 0,
   },
   paper: {
     padding: theme.spacing(2),
@@ -95,7 +89,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Navbar: FC<{ dispatch: Dispatch }> = (props) => {
+const Navbar: FC = () => {
   const classes = useStyles(theme);
   const [open, setOpen] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -108,13 +102,8 @@ const Navbar: FC<{ dispatch: Dispatch }> = (props) => {
   };
 
   const handleLogout = () => {
-    const dispatch = props.dispatch as (
-      thunk: (
-        dispatch: Dispatch<AnyAction>,
-        getState: () => StoreState
-      ) => Promise<void>
-    ) => void | Dispatch;
-    dispatch(AuthActions.tryLogout());
+    const user = new User();
+    user.Logout();
   };
 
   useEffect(() => {
@@ -199,14 +188,4 @@ const Navbar: FC<{ dispatch: Dispatch }> = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Action<{}>>): {
-  dispatch: Dispatch<Action<{}>>;
-} => {
-  return {
-    dispatch,
-  };
-};
-
-export default connect(
-  mapDispatchToProps
-)(Navbar);
+export default Navbar;

@@ -90,7 +90,7 @@
     "prettier-stylelint": "^0.4.2",
     "stylelint-config-prettier": "^5.2.0",
     "stylelint-config-standard": "^18.3.0",
-    "stylelint-order": "^3.0.1"
+    "stylelint-order": "^4.0.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

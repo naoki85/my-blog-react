@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: 0,
+    width: theme.spacing(1),
   },
   paper: {
     padding: theme.spacing(2),

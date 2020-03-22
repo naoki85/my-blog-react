@@ -15,6 +15,9 @@ import adminPostsIndex from "./containers/admin/posts/Index";
 import adminPostsNew from "./containers/admin/posts/New";
 import adminPostsEdit from "./containers/admin/posts/Edit";
 import adminRecommendedBooksIndex from "./containers/admin/recommended_books/Index";
+import adminCategoriesNew from "./components/admin/categories/New";
+import adminCategoriesEdit from "./components/admin/categories/Edit";
+import adminCategoriesIndex from "./components/admin/categories/Index";
 import ErrorsNotFound from './containers/errors/NotFound';
 import posts from "./reducers";
 import recommendedBooks from "./reducers/recommendedBooks";
@@ -81,6 +84,9 @@ ReactDOM.render(
               <Route path={'/admin/posts/edit/:id'} component={WithAuth(adminPostsEdit)} />
               <Route exact={true} path={'/admin/posts'} component={WithAuth(adminPostsIndex)} />
               <Route exact={true} path={'/admin/recommended_books'} component={WithAuth(adminRecommendedBooksIndex)} />
+              <Route path={'/admin/categories/edit/:identifier'} component={WithAuth(adminCategoriesEdit)} />
+              <Route exact={true} path={'/admin/categories/new'} component={WithAuth(adminCategoriesNew)} />
+              <Route exact={true} path={'/admin/categories'} component={WithAuth(adminCategoriesIndex)} />
               <Route exact={true} path={'/'} component={App} />
               <Redirect to={'/not_found'} />
             </Switch>

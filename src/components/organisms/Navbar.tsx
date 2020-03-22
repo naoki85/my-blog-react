@@ -174,6 +174,14 @@ const Navbar: FC = () => {
                   <ListItemText primary="Books" />
                 </ListItem>
               </Link>
+              <Link to={'/admin/categories'} className={classes.sideMenuItem}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <MenuBookIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Categories" />
+                </ListItem>
+              </Link>
               <ListItem button onClick={handleLogout}>
                 <ListItemIcon>
                   <ExitToAppIcon />

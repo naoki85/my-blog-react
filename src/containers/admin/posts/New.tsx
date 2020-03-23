@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import AdminPostsNewComponent, {AdminPostsNewProps} from '../../../components/admin/posts/New';
 import {StoreState} from "../../../types/state";
 import {Action, Dispatch} from "redux";
+import {DateToString, Now} from "../../../utils/Time";
 
 const mapStateToProps = function(state: StoreState) {
   return {
@@ -17,7 +18,7 @@ const mapStateToProps = function(state: StoreState) {
       Title: '-',
       Content: '-',
       ImageUrl: '-',
-      PublishedAt: '2019-10-01 08:00'
+      PublishedAt: DateToString(Now()),
     }
   }
 };

@@ -17,6 +17,7 @@ import '../../../styles/markdown.scss';
 import 'highlight.js/styles/monokai.css';
 import {FormatDatetime} from "../../../utils/Time";
 import CategoriesSelectBox from "./CategoriesSelectBox";
+import SelectDateTime from "./SelectDateTime";
 
 export interface AdminPostsFormStateProps {
   loading: boolean;
@@ -169,15 +170,11 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                id="publishedAt"
-                label="publishedAt"
-                name="publishedAt"
-                type="datetime-local"
-                defaultValue="2019-10-01T08:00"
-                margin="normal"
-                variant="outlined"
-                onChange={handleChange}
+              <SelectDateTime
+                handleChange={handleChange}
+                name={'publishedAt'}
+                label={'publishedAt'}
+                value={values.publishedAt}
               />
             </Grid>
             <Grid item xs={12} md={6}>

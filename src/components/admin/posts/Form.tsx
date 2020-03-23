@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import {AnyAction, Dispatch} from "redux";
 import {StoreState, Post} from "../../../types/state";
 import {Actions} from "../../../actions";
@@ -17,6 +16,7 @@ import {convertToHtml} from "../../../utils/Markdown";
 import '../../../styles/markdown.scss';
 import 'highlight.js/styles/monokai.css';
 import {FormatDatetime} from "../../../utils/Time";
+import CategoriesSelectBox from "./CategoriesSelectBox";
 
 export interface AdminPostsFormStateProps {
   loading: boolean;
@@ -83,16 +83,16 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
       ...values
     };
 
-    const dispatch = props.dispatch as (
+    const dispatch2 = props.dispatch as (
       thunk: (
         dispatch: Dispatch<AnyAction>,
         getState: () => StoreState
       ) => Promise<void>
     ) => void | Dispatch;
     if (props.post.Id === 0) {
-      dispatch(Actions.createPost(createValue));
+      dispatch2(Actions.createPost(createValue));
     } else {
-      dispatch(Actions.updatePost(props.post.Id, createValue));
+      dispatch2(Actions.updatePost(props.post.Id, createValue));
     }
   };
 
@@ -165,26 +165,7 @@ const AdminPostsForm: React.FC<AdminPostsFormStateProps & { dispatch: Dispatch }
             <Grid item xs={12}>
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="category-native-simple">Category</InputLabel>
-                <Select
-                  native
-                  onChange={handleChange}
-                  inputProps={{
-                    name: 'category',
-                    id: 'category-native-simple',
-                  }}
-                  value={values.category}
-                >
-                  <option value={"other"}>Other</option>
-                  <option value={"vuejs"}>Vue / Nuxt</option>
-                  <option value={"ruby"}>Ruby</option>
-                  <option value={"aws"}>AWS</option>
-                  <option value={"php"}>PHP</option>
-                  <option value={"kotlin"}>Kotlin</option>
-                  <option value={"android"}>Android</option>
-                  <option value={"web"}>Web 一般</option>
-                  <option value={"go"}>Go</option>
-                  <option value={"react"}>React</option>
-                </Select>
+                <CategoriesSelectBox handleChange={handleChange} category={values.category}/>
               </FormControl>
             </Grid>
             <Grid item xs={12}>

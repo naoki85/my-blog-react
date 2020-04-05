@@ -152,6 +152,14 @@ const Navbar: FC = () => {
               <ListItemText primary="Top" />
             </ListItem>
           </Link>
+          <Link to={'/books'} className={classes.sideMenuItem}>
+            <ListItem button>
+              <ListItemIcon>
+                <MenuBookIcon />
+              </ListItemIcon>
+              <ListItemText primary="Books" />
+            </ListItem>
+          </Link>
         </List>
         {(loggedIn) && (
           <>

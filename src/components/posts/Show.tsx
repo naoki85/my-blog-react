@@ -6,7 +6,7 @@ import {convertToHtml} from "../../utils/Markdown";
 import '../../styles/markdown.scss';
 import TweetButton from './TweetButton';
 import HatebuButton from './HatebuButton'
-import RecommendedBooksComponent, {RecommendedBooksProps} from './RecommendedBooks';
+import {RecommendedBooksProps} from './RecommendedBooks';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ScrollToTopOnMount from "../ScrollToTop";
 import {ParseDate} from "../../utils/Time";
@@ -88,7 +88,6 @@ const PostShowComponent: FC<PostProps> = (props) => {
           className={'preview-area'}
           dangerouslySetInnerHTML={{__html: convertToHtml(props.post.Content)}}
         />
-        <RecommendedBooksComponent recommendedBooks={props.recommendedBooks}/>
       </div>
     </>
   );

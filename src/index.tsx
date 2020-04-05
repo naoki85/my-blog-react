@@ -30,6 +30,7 @@ import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './styles/theme';
 import ReactGA from 'react-ga';
+import {BooksIndex} from "./components/books/Index";
 
 export interface CustomWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION__: () => StoreEnhancerStoreCreator<{}, {}>;
@@ -87,6 +88,7 @@ ReactDOM.render(
               <Route path={'/admin/categories/edit/:identifier'} component={WithAuth(adminCategoriesEdit)} />
               <Route exact={true} path={'/admin/categories/new'} component={WithAuth(adminCategoriesNew)} />
               <Route exact={true} path={'/admin/categories'} component={WithAuth(adminCategoriesIndex)} />
+              <Route exact={true} path={'/books'} component={BooksIndex} />
               <Route exact={true} path={'/'} component={App} />
               <Redirect to={'/not_found'} />
             </Switch>

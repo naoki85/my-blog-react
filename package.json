@@ -31,7 +31,7 @@
     "node-sass": "^4.12.0",
     "react": "^16.13.0",
     "react-dom": "^16.8.6",
-    "react-dropzone": "^10.1.10",
+    "react-dropzone": "^10.2.2",
     "react-ga": "^2.6.0",
     "react-helmet": "^5.2.1",
     "react-redux": "^7.1.0",

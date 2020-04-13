@@ -67,7 +67,7 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
-    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.22.0",
     "concurrent-transform": "^1.0.0",
     "enzyme": "^3.10.0",

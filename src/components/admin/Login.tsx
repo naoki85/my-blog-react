@@ -1,7 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
-import { AuthActions } from "../../actions/auth";
-import { Dispatch, AnyAction } from "redux";
-import { StoreState, Auth } from "../../types/state";
+import { Dispatch } from "redux";
+import { Auth } from "../../types/state";
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -14,6 +13,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 // import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import {User} from "../../models/user";
 
 export interface AdminLoginProps {
   auth: Auth;
@@ -65,17 +65,24 @@ const AdminLoginComponent: FC<AdminLoginProps & { dispatch: Dispatch }> = (props
   const [password, setPassword] = useState('');
   const [submitLogin, setSubmitLogin] = useState(false);
   const [displaySnackBar, setDisplaySnackBar] = useState(false);
+  const [displayOnetimeToken, setDisplayOnetimeToken] = useState(false);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setSubmitLogin(true);
-    const dispatch = props.dispatch as (
-      thunk: (
-        dispatch: Dispatch<AnyAction>,
-        getState: () => StoreState
-      ) => Promise<void>
-    ) => void | Dispatch;
-    dispatch(AuthActions.tryLogin(email, password));
-  }
+    const user = new User();
+    if (displayOnetimeToken) {
+      const res = await user.onetimeToken(email, password);
+      if (res) {
+        window.location.href = '/admin/posts';
+      }
+    } else {
+      const res = await user.login(email);
+      if (res) {
+        setDisplayOnetimeToken(true);
+      }
+    }
+    setSubmitLogin(false);
+  };
 
   useEffect(() => {
     if (props.auth && props.auth.Status) {
@@ -103,18 +110,22 @@ const AdminLoginComponent: FC<AdminLoginProps & { dispatch: Dispatch }> = (props
           autoFocus
           onChange={(e) => setEmail(e.target.value)}
         />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        {
+          displayOnetimeToken && (
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          )
+        }
         <div className={classes.wrapper}>
           <Button
             type="submit"

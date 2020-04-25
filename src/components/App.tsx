@@ -6,6 +6,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ReactSimplePaginationComponent from '@naoki85/react-simple-pagination-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ScrollToTopOnMount from "./ScrollToTop";
+import LinkToScrapbox from "./LinkToScrapbox";
 
 export interface AppStateProps {
   posts: Post[];
@@ -39,6 +40,7 @@ const AppComponent: FC<AppProps> = (props: AppProps) => {
   return (
     <>
       <ScrollToTopOnMount />
+      <LinkToScrapbox />
 
       {(props.loading) && (
         <div className={classes.progressArea}>
